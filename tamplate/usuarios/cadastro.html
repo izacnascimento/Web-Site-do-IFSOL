@@ -1,0 +1,132 @@
+{% extends 'layout.html' %}  
+{% load static %}
+{% block conteudo %} 
+
+
+<body>
+        
+    <div class="container col-6 mt-4">
+    
+        <form class="needs-validation mb-4 p-4 p-md-5 border rounded-3 bg-light" action="{% url 'cadastro' %}" method="post" name="formcadastro" id="formcadastro">
+            {% csrf_token %}
+            <div id="divCadastro">
+                <h2 class="mb-5">Cadastro</h2>
+            </div>
+            {% if msg %}
+                <div class="alert {{class}}">
+                    {{msg}}
+                </div>
+            {% endif %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputName">Nome</label>
+                    <input type="text" name="inputName" id="inputName" class="form-control" placeholder="John" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputSurname">Sobrenome</label>
+                    <input type="text" class="form-control" name="inputSurname" id="inputSurname" placeholder="Doe" required>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" name="inputEmail4" id="inputEmail4" placeholder="doejohnn@email.com" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Senha</label>
+                    <input type="password" class="form-control" name="inputPassword4" id="inputPassword4" placeholder="123@abc" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Confirma Senha</label>
+                    <input type="password" class="form-control" name="inputrepsenha" id="inputrepsenha" placeholder="123@abc" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCPF">CPF</label>
+                    <input type="text" onkeypress="$(this).mask('000.000.000-00');" class="form-control" name="inputCPF" id="inputCPF" placeholder="xxx.xxx.xxx-xx" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputTelefone">Telefone</label>
+                    <input type="tel"  onkeypress="$(this).mask('(00) 90000-0000')" class="form-control" name="inputTelefone" id="inputTelefone" placeholder="(xx) x xxxx-xxxx" required>
+                </div>   
+            </div>
+
+
+            <!-- Rever esse Publico/Perfil -->
+
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputpublico" class="form-label">Público</label>
+                    <select name="inputpublico" id="inputpublico" class="form-control" required>
+                        <option selected hidden>Escolha...</option>
+                        <option value="Professor">Professor</option>
+                        <option value="Aluno">Aluno</option>
+                        <option value="Servidor">Servidor</option>
+                        <option value="Público Externo">Público Externo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-10">
+                    <label for="inputAddress">Endereço</label>
+                    <input type="text" class="form-control" name="inputAddress" id="inputAddress" placeholder="Av Vinicius de Morais" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Nº</label>
+                    <input type="text" onkeypress="$(this).mask('00000');" class="form-control" maxlength="5" name="inputnumero" id="inputnumero" placeholder="25" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Complemento</label>
+                <input type="text" class="form-control" name="inputAddress2" id="inputAddress2" placeholder="Apartamento, casa, sítio...">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputZip">Cep</label>
+                    <input type="text" onkeypress="$(this).mask('00.000-000')" class="form-control" name="inputZip" id="inputZip" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputCity">Cidade</label>
+                    <input type="text" class="form-control" name="inputCity" id="inputCity" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Estado</label>
+                    <select name="inputState" id="inputState" class="form-control" required>
+                        <option selected hidden>Escolha...</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
+            <input type="submit" class="btn btn-success" value="Cadastrar-se">
+        </form>
+    </div>
+    </div>
+</body>
+
+
+{% endblock conteudo %} 

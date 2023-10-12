@@ -1,0 +1,139 @@
+/* Slider */
+.container-fluid{
+padding: 0%;
+}
+
+#Slider .carousel-inner, #Slider .carousel-item{
+height: 80vh;
+}
+
+.carousel-indicators .active{
+background-color: #44ab14;
+}
+
+.carousel-caption{
+background-color: rgba(0, 128, 0, 0.7);
+}
+
+#parceiros {
+    /* background: #ced4da; */
+    color: black;
+    border-top: 5px solid rgba(255, 193, 7, 0.1);
+    padding-top: 30px;
+    border-bottom: 5px solid rgba(255, 193, 7, 0.1);
+    padding-bottom: 100px;
+}
+
+/* Footer */
+
+#contato {
+    text-align: center;
+}
+
+.contact-box {
+    padding-bottom: 50px;
+    padding-top: 50px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #44ab14;
+}
+
+.contact-box i {
+    color: #f9f9f9;
+    border: solid 1px #f9f9f9;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.contact-box p {
+    font-size: 16px;
+    color: #d6caca;
+}
+
+.contact-title {
+    font-weight: bold;
+    color: #ffc107;
+
+}
+
+#contato {
+    background-color:  #28a745;
+}
+
+#contato h3 {
+    padding-top: 50px;
+    color: #f9f9f9;
+}
+
+/* Rodapé */
+
+#rodape {
+    background-color: rgba(255, 193, 5, 0.801);
+}
+
+#rodape .container {
+    padding: 10px 0;
+    text-align: center;
+}
+
+#rodape .container p {
+    margin-bottom: 0;
+}
+
+#rodape .container a {
+    font-weight: bold;
+    color: #444;
+}
+
+#rodape .container a:hover {
+    text-decoration: none;
+    
+}
+
+#formlogin {
+    border-radius: 12px;
+}
+
+#formcadastro {
+    border-radius: 12px;
+}
+
+#divCadastro, #formlogin h2 {
+    margin-top: 25px;
+    text-align: center;
+}
+
+p.truncate-3l {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+p.inforcard {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+h5.titulocard {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+small.limitadorDeLinha {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

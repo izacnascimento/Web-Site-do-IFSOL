@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Ico do navegador -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'ico/apple-touch-icon.png' %} ">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'ico/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'ico/favicon-16x16.png' %}">
+
+    <!-- Css do prjeto, onde alterar algumas coisas -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+    <!-- Bootstrap Online-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+   
+    
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <!-- BIblioteca Jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/53db479323.js" crossorigin="anonymous"></script>
+</head>
+<body>
+        <!-- Detalhe da Logo IFSOL -->
+
+
+        <nav class="navbar navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'img/logo_ifsol.png' %}" class="img-fluid" width="100">
+                </a>
+            </div>
+        </nav>
+
+
+        <!-- Menu -->
+        <!-- Comando para deixar barra fixa em cima "fixed-top" -->
+
+        
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'img/girasol.png' %}" alt="" width="30">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Início <span class="sr-only">(página atual)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'produtos' %}">Produtos <span class="sr-only">(página atual)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contato' %}">Contatos<span class="sr-only">(página atual)</span></a>
+                        </li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logcarrinho' %}"><i class="fa-solid fa-cart-shopping"></i> <span class="sr-only">(página atual)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logperfil' %}"><i class="fa-solid fa-circle-user"></i> <span class="sr-only">(página atual)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'AlterarSenha' %}"><i class="fa-solid fa-lock"></i><span class="sr-only">(página atual)</span></a>
+                            </li>
+                           
+                            <li>
+                            <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login <span class="sr-only">(página atual)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'cadastro' %}">Cadastro <span class="sr-only">(página atual)</span></a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>  
+
+
+        <!-- Rodapé -->
+
+
+        <span class="fixed-bottom">
+            <div id="rodape">
+                <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Desenvolvido por <a href="">Leandro Moura, </a> <a href="">Maria Fernada e</a> <a href=""> João Augusto </a> &copy; 2022</p>
+                            </div>
+                        </div>
+                </div>
+        </div>
+       </span>
+
+
+        {% block conteudo %}
+        {% endblock conteudo %}
+
+
+    </body>
+</html>

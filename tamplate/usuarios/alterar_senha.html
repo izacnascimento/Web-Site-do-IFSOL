@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}  
+{% load static %}
+{% block conteudo %} 
+
+
+<body>
+
+
+    <!-- Local de alterar senha  -->
+
+
+   <div class="container mt-5">
+        <div class="row aling-items-center">
+            <div class="col-md-10 mx-auto col-lg-5">
+                <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light" method="post" action="{% url 'AlterarSenha' %}" name="formlogin" id="formlogin">
+                    {% csrf_token %}
+                    <h2>Alterar Senha</h2>
+                    {% if msg %}
+                      <div class="alert {{class}}">
+                          {{msg}}
+                      </div>
+                    {% endif %}
+                    <div class="form-floating was-validated mb-3">
+                        <label for="inputPassword4" class="form-label">Nova Senha</label>
+                        <input type="password" class="form-control" name="inputPassword4" id="inputPassword4" placeholder="xxxxx" required>                    
+                    </div>
+                    <div class="form-floating was-validated mb-3">
+                        <label for="inputPassword4" class="form-label">Comfirma Senha</label>
+                        <input type="password" class="form-control" name="inputrepsenha" id="inputrepsenha" placeholder="xxxxx" required>                       
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Salva">
+                </form>
+            </div>
+        </div>
+   </div>
+
+
+</body>
+
+
+{% endblock conteudo %} 

@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}  
+{% load static %}
+{% block conteudo %} 
+
+
+<body>
+  
+    <!-- Produtos -->
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-5">
+                    <form class="justify-content-center justify-content-md-start mb-3 mb-md-0 mt-4" method="get" action="">
+                        <div class="input-group input-group-sm">
+                            <input type="text"name="busca_de_produtos" class="form-control"  placeholder="Digite aqui o que proucura">
+                            <input type="submit"  style="margin-left: 10px;" class="btn btn-success" value="Buscar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="mt-3">
+            {% if user.is_authenticated %}
+            
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                        Será preciso realizar o Login para solicitar os produtos.
+                </div>
+            {% endif %}
+            <div class="row">
+                <!-- teste pegando do banco de dados -->
+                {% if listagem_de_produtos %}
+                {% for listagem_de_produtos in listagem_de_produtos %}
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 d-flex align-items-stretch mb-4">     
+                    <div class="card text-center bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title truncate-3l">{{listagem_de_produtos.nome}}</h5>              
+                        </div>
+                        {% if listagem_de_produtos.imagem == '' %}
+                            <img src="{% static 'img/sem_foto.jpg' %}" class="card-img-top">       
+                        {% else %}
+                            <img src="{{ listagem_de_produtos.imagem.url }}" class="card-img-top">
+                        {% endif %}
+                        <!-- <img src="{% static 'img/produtos/pdhortela.jpeg' %}" class="card-img-top"> -->
+                        <div class="card-header">
+                            R$ {{listagem_de_produtos.preco}}
+                            <p class="card-text">{{listagem_de_produtos.unidade_de_medida}}</p>
+                        </div>                      
+                        <div class="card-footer">
+                            {% if user.is_authenticated %}
+                                <form class="d-block">
+                                    <input type="submit" class="btn btn-success" value="Adicionar">
+                                </form>
+                                <small class="text-success limitadorDeLinha">{{listagem_de_produtos.estoque}} {{listagem_de_produtos.unidade_de_medida}} em estoque </small>
+                            {% else %}
+                                <div>
+                                    <button class="btn btn-success" disabled>
+                                        <small><i class="fa-solid fa-lock"></i></small>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <hr class="mt-3">
+        </div>
+    </main>
+</body>
+
+
+{% endblock conteudo %} 

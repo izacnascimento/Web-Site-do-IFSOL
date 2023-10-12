@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}  
+{% load static %}
+{% block conteudo %} 
+
+
+<body>
+
+
+    <!-- Local de login -->
+
+
+   <div class="container mt-5">
+        <div class="row aling-items-center">
+            <div class="col-md-10 mx-auto col-lg-5">
+                <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light" method="post" action="{% url 'login' %}" name="formlogin" id="formlogin">
+                    {% csrf_token %}
+                    <h2>Login</h2>
+                    {% if msg %}
+                      <div class="alert {{class}}">
+                          {{msg}}
+                      </div>
+                    {% endif %}
+                    <div class="form-floating was-validated mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="inputEmail4" id="inputEmail4" placeholder="Email" required>                    
+                    </div>
+                    <div class="form-floating was-validated mb-3">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" name="inputPassword4" id="inputPassword4" placeholder="Senha" required>                       
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Entrar">
+                </form>
+            </div>
+        </div>
+   </div>
+
+
+</body>
+
+
+{% endblock conteudo %} 

@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}  
+{% load static %}
+{% block conteudo %} 
+
+
+<body id="bodyContatos">
+    
+    <!-- Parte dos contatos -->
+
+
+    <section class="contact py-5 bg-light" id="contatoPgCobt">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Entre em Contato</h4>
+                        <hr>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="address">
+                            
+                        <h5><i class="fa-solid fa-location-dot"></i>    Endereço</h5>
+                        <ul class="list-unstyled">
+                            <li> Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte</li>
+                            <li> RN-120, Km 2, Novo Juremal, São Paulo do Potengi - RN </li>
+                            <li> CEP 59460-000</li>
+                        </ul>
+                        <p>Por favor, não envie nada para este endereço.</p>
+                        </div>
+                       
+                        <div class="phone">
+                            <h5><i class="fas fa-phone"></i>     Telefone:</h5>
+                            <ul class="list-unstyled">
+                            <li> (84) 4005-4112</li>
+                            <li> (84) 8107-1326</li>
+                        </ul>
+                        </div> 
+                        <div class="insta">
+                            <h5><i class="fa-brands fa-instagram"></i>     Instagram:</h5>
+                            <ul class="list-unstyled">
+                            <li> @cooppotengi</li>
+                            <li> @ifsol_spp</li>
+                        </ul>
+                        </div>
+                        <hr>
+                    
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+
+
+                                <h5>Parcerias</h5>
+                                    <div class="row mt-5 mb-5">
+                                        <div class="col-lg-4">
+                                            <a href="#!">
+                                                <img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/ifrn_spp.png' %}" alt="...">
+                                            </a>
+                                        </div>    
+                                        <div class="col-lg-4">
+                                            <a href="#!">
+                                                <img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/logo_ifsol.png' %}" alt="..." width="150">
+                                            </a>
+                                        </div>    
+                                        <div class="col-lg-4">
+                                            <a href="#!">
+                                                <img class="img-fluid img-brand d-block mx-auto" src="{% static 'img/cooppotengi.png' %}" alt="...">
+                                            </a>
+                                        </div>    
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </section>
+</body>
+
+
+{% endblock conteudo %} 
+
+
