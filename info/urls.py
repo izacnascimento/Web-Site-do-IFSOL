@@ -10,4 +10,5 @@ urlpatterns = [
     path('logperfil', views.logperfil, name='logperfil'),
     path('logcarrinho', views.logcarrinho, name='logcarrinho'),
     path('logperfil', views.logperfil, name='logperfil'),
+    path('addcarrinho/<int:id>', views.addcarrinho, name='addcarrinho'),
 ]

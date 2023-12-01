@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
 from .models import Produtos
+from .models import Carrinho
+from .models import ItemCarrinho
+from django.contrib.auth.models import User
 from .models import Usuario
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.http import JsonResponse
+from rest_framework import status
 
 def index (request):
     return render (request, 'index.html')
@@ -43,7 +48,9 @@ def produtos (request):
 
 def logcarrinho (request):
     if request.user.is_authenticated:  
-        return render (request, 'usuarios/logcarrinho.html')
+        carrinho = request.user.carrinhos.filter(status = True).last()
+        itens = carrinho.itens.all()
+        return render (request, 'usuarios/logcarrinho.html', {'itens' : itens})
     else:
         return render (request, 'index.html')
 
@@ -79,3 +86,24 @@ def logperfil (request):
         
     else:
         return render (request, 'index.html')
+
+def addcarrinho (request, id):
+    produto = Produtos.objects.get(id=id)
+    carrinho =  request.user.carrinhos.filter(status = True).last()
+    if carrinho is None:
+        carrinho = Carrinho() 
+        carrinho.usuario = request.user
+        carrinho.status = True
+        carrinho.save()
+
+    p = carrinho.itens.filter(produto__id=id).first()
+
+    if p is None:    
+        ic = ItemCarrinho(carrinho = carrinho, produto = produto, quantidade = 0)
+        ic.save()
+        carrinho.itens.add(ic)
+        carrinho.save()
+    
+    item = carrinho.itens.filter(produto__id= id).first()
+    item.quantidade+= 1
+    item.save()

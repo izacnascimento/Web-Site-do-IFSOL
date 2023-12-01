@@ -32,7 +32,7 @@
                 {% if listagem_de_produtos %}
                 {% for listagem_de_produtos in listagem_de_produtos %}
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 d-flex align-items-stretch mb-4">     
-                    <div class="card text-center bg-light">
+                    <div id="product-info" class="card text-center bg-light">
                         <div class="card-body">
                             <h5 class="card-title truncate-3l">{{listagem_de_produtos.nome}}</h5>              
                         </div>
@@ -42,15 +42,15 @@
                             <img src="{{ listagem_de_produtos.imagem.url }}" class="card-img-top">
                         {% endif %}
                         <!-- <img src="{% static 'img/produtos/pdhortela.jpeg' %}" class="card-img-top"> -->
-                        <div class="card-header">
+                        <div id="price" class="card-header">
                             R$ {{listagem_de_produtos.preco}}
                             <p class="card-text">{{listagem_de_produtos.unidade_de_medida}}</p>
                         </div>                      
                         <div class="card-footer">
                             {% if user.is_authenticated %}
-                                <form class="d-block">
-                                    <input type="submit" class="btn btn-success" value="Adicionar">
-                                </form>
+                                
+                                    <a id="add-product" href="addcarrinho/{{listagem_de_produtos.id}}" class="btn btn-success ajax-link">Adicionar</a>
+                            
                                 <small class="text-success limitadorDeLinha">{{listagem_de_produtos.estoque}} {{listagem_de_produtos.unidade_de_medida}} em estoque </small>
                             {% else %}
                                 <div>
@@ -70,5 +70,35 @@
     </main>
 </body>
 
-
-{% endblock conteudo %} 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ajaxLinks = document.querySelectorAll('.ajax-link');
+    
+        ajaxLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Evita o comportamento padrão de navegação
+    
+                const url = this.getAttribute('href'); // Obtém o URL do atributo href
+                console.log(url)        
+                // Realiza a requisição AJAX
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+    
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            // Manipule a resposta da requisição aqui
+                            console.log(xhr.responseText);
+                        } else {
+                            // Se houver erros, manipule-os aqui
+                            console.error('Erro na requisição:', xhr.status);
+                        }
+                    }
+                };
+    
+                xhr.send(); // Envia a requisição
+            });
+        });
+    });
+</script>    
+{% endblock conteudo %}

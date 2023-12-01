@@ -21,3 +21,11 @@ class Produtos(models.Model):
     estoque = models.CharField(max_length=20)
     imagem = models.ImageField(upload_to='cars', blank=True)
     
+class Carrinho(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='carrinhos')
+    status = models.BooleanField()
+
+class ItemCarrinho(models.Model):
+    carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE, related_name='itens')
+    produto = models.ForeignKey(Produtos, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField(default=1)    

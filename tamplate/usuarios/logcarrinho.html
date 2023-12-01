@@ -10,15 +10,16 @@
             <h1 class="text-center mt-3 mb-2">Carrinho de Compras</h1>
             <hr>
             <ul class="list-group mb-3">
-                <li class="list-group-item py-3"> 
+                {%for i in itens%}
+                <li class="list-group-item py-3">
                     <div class="row g-3">
                         <div class="col-4 col-md-3 col-lg-2">
-                            <a href="#">
-                                <img class="card-img-top" src="{% static 'img/produtos/pdlimao.jpg' %}" alt="img-thumbnail">
-                            </a>
+                            <!-- <a href="#"> -->
+                                <img class="card-img-top" src="{{ produto_adicionado.imagem.url }}" alt="img-thumbnail">
+                            <!-- </a> -->
                         </div>
                         <div class="col-8 col-md-9 col-lg-7 col-xl-8 text-left align-self-center">
-                        <h4><b><a href="#" class="text-decoration-none text-success">Limão</a></b></h4>
+                        <h4><b><a href="#" class="text-decoration-none text-success">{{i.produto.nome}}</a></b></h4>
                         <h4>
                             <small>
                                  <!-- Texto para descrever o Produto  -->
@@ -27,8 +28,9 @@
                     </div>
                     <div class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-4 offset-md-8 col-lg-3 offset-lg-0 col-xl-2 align-self-center mt-3">
                         <div class="input-group"> 
-                            <input type="number" class="form-control text-center border-warning" value="2">
-                            <button type="button" class="btn btn-outline-warning btn-sm">
+                            <input type="number" class="form-control text-center border-warning" value="{{i.quantidade}}">
+                            
+                            <button type="button" class="btn-apagar btn btn-outline-warning btn-sm" data-item-id="{{ itens.id }}">
                                 
                                     <i class="fa-solid fa-trash"></i>
                                 
@@ -36,114 +38,14 @@
                         </div>
                     </div>
                     <div class="text-right col-12">
-                        <small class="text-secondary">Valor Kg: R$ 8,00 </small>
+                        <small class="text-secondary">Valor Kg: R$ {{i.produto.preco}} </small>
                         <br>
-                        <span class="text-dark">Valor Item: R$ 16,00</span>
+                        <span class="text-dark">Valor Item: R$ {{i.resultado}}</span>
                     </div>
                     </div>
                 </li>
-                <li class="list-group-item py-3"> 
-                    <div class="row g-3">
-                        <div class="col-4 col-md-3 col-lg-2">
-                            <a href="#">
-                                <img class="card-img-top" src="{% static 'img/produtos/pdbanana.png' %}" alt="img-thumbnail">
-                            </a>
-                        </div>
-                        <div class="col-8 col-md-9 col-lg-7 col-xl-8 text-left align-self-center">
-                        <h4><b><a href="#" class="text-decoration-none text-success">Banana</a></b></h4>
-                        <h4>
-                            <small>
-                                 <!-- Texto para descrever o Produto  -->
-                            </small>
-                        </h4>
-                    </div>
-                    <div class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-4 offset-md-8 col-lg-3 offset-lg-0 col-xl-2 align-self-center mt-3">
-                        <div class="input-group"> 
-                            <input type="number" class="form-control text-center border-warning" value="1">
-                            <button type="button" class="btn btn-outline-warning btn-sm">
-                                
-                                    <i class="fa-solid fa-trash"></i>
-                                
-                            </button>
-                        </div>
-                    </div>
-                    <div class="text-right col-12">
-                        <small class="text-secondary">Valor pauma: R$ 4,50 </small>
-                        <br>
-                        <span class="text-dark">Valor Item: R$ 4,50</span>
-                    </div>
-                    </div>
-                </li>
-                <li class="list-group-item py-3"> 
-                    <div class="row g-3">
-                        <div class="col-4 col-md-3 col-lg-2">
-                            <a href="#">
-                                <img class="card-img-top" src="{% static 'img/produtos/pdabacaxi.png' %}" alt="img-thumbnail">
-                            </a>
-                        </div>
-                        <div class="col-8 col-md-9 col-lg-7 col-xl-8 text-left align-self-center">
-                        <h4><b><a href="#" class="text-decoration-none text-success">Abacaxi</a></b></h4>
-                        <h4>
-                            <small>
-                                 <!-- Texto para descrever o Produto  -->
-                            </small>
-                        </h4>
-                    </div>
-                    <div class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-4 offset-md-8 col-lg-3 offset-lg-0 col-xl-2 align-self-center mt-3">
-                        <div class="input-group"> 
-                            <input type="number" class="form-control text-center border-warning" value="5">
-                            <button type="button" class="btn btn-outline-warning btn-sm">
-                                
-                                    <i class="fa-solid fa-trash"></i>
-                                
-                            </button>
-                        </div>
-                    </div>
-                    <div class="text-right col-12">
-                        <small class="text-secondary">Valor Un: R$ 2,50 </small>
-                        <br>
-                        <span class="text-dark">Valor Item: R$ 12,50</span>
-                    </div>
-                    </div>
-                </li>
-                <li class="list-group-item py-3"> 
-                    <div class="row g-3">
-                        <div class="col-4 col-md-3 col-lg-2">
-                            <a href="#">
-                                <img class="card-img-top" src="{% static 'img/produtos/pdhortela.jpeg' %}" alt="img-thumbnail">
-                            </a>
-                        </div>
-                        <div class="col-8 col-md-9 col-lg-7 col-xl-8 text-left align-self-center">
-                        <h4><b><a href="#" class="text-decoration-none text-success">Hortelã</a></b></h4>
-                        <h4>
-                            <small>
-                                 <!-- Texto para descrever o Produto  -->
-                            </small>
-                        </h4>
-                    </div>
-                    <div class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-4 offset-md-8 col-lg-3 offset-lg-0 col-xl-2 align-self-center mt-3">
-                        <div class="input-group"> 
-                            <input type="number" class="form-control text-center border-warning" value="2">
-                            <button type="button" class="btn btn-outline-warning btn-sm">
-                                
-                                    <i class="fa-solid fa-trash"></i>
-                                
-                            </button>
-                        </div>
-                    </div>
-                    <div class="text-right col-12">
-                        <small class="text-secondary">Valor Moioi: R$ 4,00 </small>
-                        <br>
-                        <span class="text-dark">Valor Item: R$ 8,00</span>
-                    </div>
-                    </div>
-                </li>
-                <li class="text-right list-group-item py-3">
-                    <h4 class="text-dark mb-3"> Valor Total: R$ 41,00</h4>
-                    <button class="btn btn-success btn-lg">Solicitar</button>
-
-
-                </li>
+                {%endfor%}
+                      
             </ul>
 
 
@@ -153,5 +55,33 @@
 
 </body>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const botoesApagar = document.querySelectorAll('.btn-apagar');
+    
+        botoesApagar.forEach(function(botao) {
+            botao.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-item-id');
+    
+                // Realiza a requisição AJAX para remover o produto do carrinho
+                fetch(/carrinho/remover/${itemId}/, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': '{{ csrf_token }}'  // CSRF token para proteção
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Atualiza a interface do usuário (remova o produto do HTML, por exemplo)
+                    console.log(data.message); // Exibe a mensagem retornada pelo Django no console
+                })
+                .catch(error => {
+                    console.error('Erro ao remover o produto:', error);
+                });
+            });
+        });
+    });
+    </script>
 
-{% endblock conteudo %} 
+{% endblock conteudo %}
