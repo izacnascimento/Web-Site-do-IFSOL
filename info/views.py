@@ -1,13 +1,22 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from .models import Produtos
+from .models import Usuario
 from .models import Carrinho
 from .models import ItemCarrinho
-from django.contrib.auth.models import User
-from .models import Usuario
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.http import JsonResponse
 from rest_framework import status
+# from django.contrib.admin.views.decorators import staff_member_required
+# from django.shortcuts import render
+
+# @staff_member_required
+# def superuser_management(request):
+#     # Lógica para gerenciar os dados
+#     # ...
+
+#     return render(request, 'usuarios/superuser.html')
 
 def index (request):
     return render (request, 'index.html')
@@ -48,9 +57,9 @@ def produtos (request):
 
 def logcarrinho (request):
     if request.user.is_authenticated:  
-        carrinho = request.user.carrinhos.filter(status = True).last()
+        carrinho =  request.user.carrinhos.filter(status = True).last()
         itens = carrinho.itens.all()
-        return render (request, 'usuarios/logcarrinho.html', {'itens' : itens})
+        return render (request, 'usuarios/logcarrinho.html', {'itens': itens})
     else:
         return render (request, 'index.html')
 
@@ -107,3 +116,44 @@ def addcarrinho (request, id):
     item = carrinho.itens.filter(produto__id= id).first()
     item.quantidade+= 1
     item.save()
+
+def atualizar_quantidade(request, item_id):
+    if request.method == 'GET':
+        item = get_object_or_404(ItemCarrinho, pk=item_id)
+
+        nova_quantidade_str = request.GET.get('nova_quantidade')
+        if nova_quantidade_str is not None:
+            try:
+                nova_quantidade = int(nova_quantidade_str)
+                if nova_quantidade >= 0:  # Verifica se a quantidade é um número positivo
+                    item.quantidade = nova_quantidade
+                    item.save()
+                    return JsonResponse({'message': 'Quantidade atualizada com sucesso.'})
+                else:
+                    return JsonResponse({'error': 'A quantidade deve ser um número positivo.'}, status=400)
+            except ValueError:
+                return JsonResponse({'error': 'Valor inválido para quantidade.'}, status=400)
+        else:
+            return JsonResponse({'error': 'Campo nova_quantidade ausente na requisição.'}, status=400)
+
+    return JsonResponse({}, status=400)
+
+def apagar_item_carrinho(request, item_id):
+    if request.method == 'GET':
+        item = get_object_or_404(ItemCarrinho, pk=item_id)
+        item.delete()
+        return JsonResponse({'message': 'Item apagado com sucesso.'})
+
+    return JsonResponse({}, status=400)
+
+def atualizar_subtotal(request, item_id):
+    if request.method == 'GET' and request.is_ajax():
+        quantidade = int(request.GET.get('quantidade'))
+        item = ItemCarrinho.objects.get(pk=item_id)
+        item.quantidade = quantidade
+        subtotal = item.produto.preco * quantidade
+        item.save()
+        
+        return JsonResponse({'subtotal': subtotal})
+
+    return JsonResponse({}, status=400)

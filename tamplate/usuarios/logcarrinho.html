@@ -11,12 +11,18 @@
             <hr>
             <ul class="list-group mb-3">
                 {%for i in itens%}
-                <li class="list-group-item py-3">
+                <li class="item-carrinho list-group-item py-3">
                     <div class="row g-3">
                         <div class="col-4 col-md-3 col-lg-2">
-                            <!-- <a href="#"> -->
-                                <img class="card-img-top" src="{{ produto_adicionado.imagem.url }}" alt="img-thumbnail">
-                            <!-- </a> -->
+
+
+                            {% if i.produto.imagem == '' %}
+                            <img src="{% static 'img/sem_foto.jpg' %}" class="card-img-top">       
+                            {% else %}
+                            <img class="card-img-top" src="{{ i.produto.imagem.url }}" alt="img-thumbnail">
+                            {% endif %}
+                            
+
                         </div>
                         <div class="col-8 col-md-9 col-lg-7 col-xl-8 text-left align-self-center">
                         <h4><b><a href="#" class="text-decoration-none text-success">{{i.produto.nome}}</a></b></h4>
@@ -28,9 +34,9 @@
                     </div>
                     <div class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-4 offset-md-8 col-lg-3 offset-lg-0 col-xl-2 align-self-center mt-3">
                         <div class="input-group"> 
-                            <input type="number" class="form-control text-center border-warning" value="{{i.quantidade}}">
+                            <input type="number" class="form-control text-center border-warning" id="quantidade-{{i.id}}" value="{{i.quantidade}}">
                             
-                            <button type="button" class="btn-apagar btn btn-outline-warning btn-sm" data-item-id="{{ itens.id }}">
+                            <button type="button" class="btn-apagar btn btn-outline-warning btn-sm" data-item-id="{{i.id}}">
                                 
                                     <i class="fa-solid fa-trash"></i>
                                 
@@ -38,14 +44,37 @@
                         </div>
                     </div>
                     <div class="text-right col-12">
+                        
+                    
+                        
                         <small class="text-secondary">Valor Kg: R$ {{i.produto.preco}} </small>
                         <br>
-                        <span class="text-dark">Valor Item: R$ {{i.resultado}}</span>
+                         <span class="subtotal text-dark">Valor Item: R$ <!--{{  item.quantidade }}--></span> 
+                        <!-- {% if i.produto and i.quantidade %}
+                        Calcula o valor total do item (preço unitário * quantidade) -->
+                        <!-- <p>Valor total deste item: R$</p>
+                        {% else %}
+                        <p>Valor total deste item não disponível</p>
+                        {% endif %}  -->
+                        <!-- <span class="text-dark">Valor Item: R$ </span> -->
+                        <!-- {% for i in itens_carrinho %}
+                            <div class="item-carrinho">
+                                <h4>{{ i.produto.nome }}</h4>
+                                <p>Preço: R$ {{ i.produto.preco }}</p>
+                                <p>Quantidade: {{ i.quantidade }}</p>
+                                Agora, utilize o novo atributo 'valor_total' 
+                                <p>Valor total deste item: R$ {{ i.valor_total }}</p>
+                                 Outros detalhes do item do carrinho 
+                            </div>
+                        {% endfor %} -->
                     </div>
                     </div>
                 </li>
                 {%endfor%}
-                      
+                <li class="text-right list-group-item mb-5 py-3">
+                    <h4 class="text-dark mb-3"> Valor Total: R$ 41,00</h4>
+                    <button class="btn btn-success btn-lg">Solicitar</button>
+                </li>
             </ul>
 
 
@@ -54,31 +83,131 @@
 
 
 </body>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const botoesApagar = document.querySelectorAll('.btn-apagar');
     
         botoesApagar.forEach(function(botao) {
-            botao.addEventListener('click', function() {
+            botao.addEventListener('click', function(event) {
                 const itemId = this.getAttribute('data-item-id');
+                const itemParaRemover = this.closest('.item-carrinho'); // Obtém o elemento pai do item a ser removido
     
-                // Realiza a requisição AJAX para remover o produto do carrinho
-                fetch(/carrinho/remover/${itemId}/, {
-                    method: 'DELETE',
+                // Realiza a requisição GET para excluir o item do carrinho
+                fetch(/apagar_item_carrinho/${itemId}/, {
+                    method: 'GET',
                     headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': '{{ csrf_token }}'  // CSRF token para proteção
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
                     }
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Atualiza a interface do usuário (remova o produto do HTML, por exemplo)
+                    console.log(data.message);
+                    // Remove o elemento da interface após a exclusão bem-sucedida
+                    if (itemParaRemover) {
+                        itemParaRemover.remove();
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao apagar o item:', error);
+                });
+            });
+        });
+    
+        // Função para obter o token CSRF
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+    
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputsQuantidade = document.querySelectorAll('.form-control');
+    
+        inputsQuantidade.forEach(function(input) {
+            input.addEventListener('change', function(event) {
+                const itemId = this.id.split('-')[1]; // Obtém o ID do item
+    
+                // Obtém a nova quantidade do input
+                const novaQuantidade = this.value;
+    
+                // Realiza a requisição AJAX para atualizar a quantidade no banco de dados
+                fetch(/atualizar_quantidade/${itemId}/?nova_quantidade=${novaQuantidade}, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken') // Função para obter o token CSRF
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
                     console.log(data.message); // Exibe a mensagem retornada pelo Django no console
                 })
                 .catch(error => {
-                    console.error('Erro ao remover o produto:', error);
+                    console.error('Erro ao atualizar a quantidade:', error);
                 });
+            });
+        });
+    
+        // Função para obter o token CSRF
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+      // Código JavaScript para atualizar o valor total do item quando a quantidade mudar
+      document.addEventListener('DOMContentLoaded', function() {
+        const quantidades = document.querySelectorAll('.quantidade');
+
+        quantidades.forEach(function(quantidadeInput) {
+            quantidadeInput.addEventListener('change', function() {
+                const itemContainer = this.closest('.item-carrinho');
+                const preco = parseFloat(itemContainer.querySelector('p:nth-child(2)').textContent.split(' ')[1]); // Obtém o preço do produto
+                const quantidade = parseInt(this.value); // Obtém a nova quantidade
+
+                const valorTotal = preco * quantidade; // Calcula o novo valor total
+                itemContainer.querySelector('.valor-total').textContent = 'R$ ' + valorTotal.toFixed(2); // Atualiza o valor total no elemento HTML
+            });
+        });
+    });
+    
+    $(document).ready(function() {
+        $('.quantidade').on('change', function() {
+            const itemID = $(this).closest('.item-carrinho').data('item-id');
+            const quantidade = $(this).val();
+            
+            $.ajax({
+                type: 'POST',
+                url: '/atualizar_subtotal/' + itemID + '/',
+                data: {
+                    'quantidade': quantidade,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    $(.item-carrinho[data-item-id="${itemID}"] .subtotal).text('R$ ' + data.subtotal);
+                }
             });
         });
     });
