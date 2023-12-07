@@ -147,15 +147,16 @@ def atualizar_quantidade(request, item_id):
 
 def apagar_item_carrinho(request, item_id):
     if request.method == 'GET':
-        item = get_object_or_404(ItemCarrinho, pk=item_id)
-        item.delete()
-        return JsonResponse({'message': 'Item apagado com sucesso.'})
-
-    return JsonResponse({}, status=400)
+        print("id", item_id)
+        item = ItemCarrinho.objects.filter(pk=item_id).first()
+        if item: 
+            item.delete()
+       
+    return redirect("/logcarrinho")
 
 def atualizar_subtotal(request, item_id):
     item = ItemCarrinho.objects.get(pk=item_id)
     item.quantidade = quantidade
     subtotal = item.produto.preco * quantidade
         
-    return subtotal
+    return subtotal

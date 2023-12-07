@@ -29,4 +29,4 @@ class ItemCarrinho(models.Model):
     carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE, related_name='itens')
     produto = models.ForeignKey(Produtos, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField(default=1)
-    subtotal = models.DecimalField(decimal_places=2, max_digits=20)
+    subtotal = models.DecimalField(decimal_places=2, max_digits=20)
