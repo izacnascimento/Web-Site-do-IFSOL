@@ -59,7 +59,10 @@ def logcarrinho (request):
     if request.user.is_authenticated:  
         carrinho =  request.user.carrinhos.filter(status = True).last()
         itens = carrinho.itens.all()
-        return render (request, 'usuarios/logcarrinho.html', {'itens': itens})
+        total = 0
+        for i in itens:
+            total += i.produto.preco * i.quantidade
+        return render (request, 'usuarios/logcarrinho.html', {'itens': itens, 'total': total,})
     else:
         return render (request, 'index.html')
 
@@ -108,13 +111,14 @@ def addcarrinho (request, id):
     p = carrinho.itens.filter(produto__id=id).first()
 
     if p is None:    
-        ic = ItemCarrinho(carrinho = carrinho, produto = produto, quantidade = 0)
+        ic = ItemCarrinho(carrinho = carrinho, produto = produto, quantidade = 0, subtotal = 0)
         ic.save()
         carrinho.itens.add(ic)
         carrinho.save()
     
     item = carrinho.itens.filter(produto__id= id).first()
     item.quantidade+= 1
+    item.subtotal = item.quantidade * item.produto.preco 
     item.save()
 
 def atualizar_quantidade(request, item_id):
@@ -127,8 +131,11 @@ def atualizar_quantidade(request, item_id):
                 nova_quantidade = int(nova_quantidade_str)
                 if nova_quantidade >= 0:  # Verifica se a quantidade é um número positivo
                     item.quantidade = nova_quantidade
+                    item.subtotal = nova_quantidade * item.produto.preco
                     item.save()
-                    return JsonResponse({'message': 'Quantidade atualizada com sucesso.'})
+
+                    subtotal = item.produto.preco * nova_quantidade   
+                    return JsonResponse({'message': 'Quantidade atualizada com sucesso.', 'subtotal': subtotal})
                 else:
                     return JsonResponse({'error': 'A quantidade deve ser um número positivo.'}, status=400)
             except ValueError:
@@ -147,13 +154,8 @@ def apagar_item_carrinho(request, item_id):
     return JsonResponse({}, status=400)
 
 def atualizar_subtotal(request, item_id):
-    if request.method == 'GET' and request.is_ajax():
-        quantidade = int(request.GET.get('quantidade'))
-        item = ItemCarrinho.objects.get(pk=item_id)
-        item.quantidade = quantidade
-        subtotal = item.produto.preco * quantidade
-        item.save()
+    item = ItemCarrinho.objects.get(pk=item_id)
+    item.quantidade = quantidade
+    subtotal = item.produto.preco * quantidade
         
-        return JsonResponse({'subtotal': subtotal})
-
-    return JsonResponse({}, status=400)
+    return subtotal

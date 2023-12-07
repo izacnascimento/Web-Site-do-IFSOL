@@ -47,34 +47,23 @@
                         
                     
                         
-                        <small class="text-secondary">Valor Kg: R$ {{i.produto.preco}} </small>
+                        <small class="text-secondary">Valor {{i.produto.unidade_de_medida}}: R$ {{i.produto.preco}} </small>
                         <br>
-                         <span class="subtotal text-dark">Valor Item: R$ <!--{{  item.quantidade }}--></span> 
-                        <!-- {% if i.produto and i.quantidade %}
-                        Calcula o valor total do item (preço unitário * quantidade) -->
-                        <!-- <p>Valor total deste item: R$</p>
-                        {% else %}
-                        <p>Valor total deste item não disponível</p>
-                        {% endif %}  -->
-                        <!-- <span class="text-dark">Valor Item: R$ </span> -->
-                        <!-- {% for i in itens_carrinho %}
-                            <div class="item-carrinho">
-                                <h4>{{ i.produto.nome }}</h4>
-                                <p>Preço: R$ {{ i.produto.preco }}</p>
-                                <p>Quantidade: {{ i.quantidade }}</p>
-                                Agora, utilize o novo atributo 'valor_total' 
-                                <p>Valor total deste item: R$ {{ i.valor_total }}</p>
-                                 Outros detalhes do item do carrinho 
-                            </div>
-                        {% endfor %} -->
+                         <span class=" text-dark" >Subtotal do Item: R$ <span class="subtotal" id = "{{i.id}}">{{i.subtotal}}</span></span> 
                     </div>
                     </div>
                 </li>
                 {%endfor%}
+                {%if total > 0 %}
                 <li class="text-right list-group-item mb-5 py-3">
-                    <h4 class="text-dark mb-3"> Valor Total: R$ 41,00</h4>
+                    <h4 class="text-dark mb-3"> Valor Total: R$ <span class="total_carrinho" id="total_carrinho">{{total}}</span></h4>
                     <button class="btn btn-success btn-lg">Solicitar</button>
                 </li>
+                {%else%}
+                <div class="alert alert-warning" role="alert">
+                    Seu carrinho está vazio.
+                </div>
+                {%endif%}
             </ul>
 
 
@@ -107,6 +96,7 @@
                     // Remove o elemento da interface após a exclusão bem-sucedida
                     if (itemParaRemover) {
                         itemParaRemover.remove();
+                        atualizar_total();
                     }
                 })
                 .catch(error => {
@@ -154,10 +144,15 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log(data.message); // Exibe a mensagem retornada pelo Django no console
+                    $("#"+itemId).html(data.subtotal)  
+                    atualizar_total();              
                 })
+
                 .catch(error => {
                     console.error('Erro ao atualizar a quantidade:', error);
                 });
+
+                
             });
         });
     
@@ -211,6 +206,16 @@
             });
         });
     });
+
+    
+    function atualizar_total(){
+        let total = 0 
+        $(".subtotal").each(function(){
+            total= total + parseFloat($(this).html());
+        });
+        $('.total_carrinho').html(total);
+    };
+
     </script>
 
-{% endblock conteudo %}
+{% endblock conteudo %}

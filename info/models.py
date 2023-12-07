@@ -20,7 +20,7 @@ class Produtos(models.Model):
     unidade_de_medida = models.CharField(max_length=20)
     estoque = models.CharField(max_length=20)
     imagem = models.ImageField(upload_to='cars', blank=True)
-    
+
 class Carrinho(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='carrinhos')
     status = models.BooleanField()
@@ -28,4 +28,5 @@ class Carrinho(models.Model):
 class ItemCarrinho(models.Model):
     carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE, related_name='itens')
     produto = models.ForeignKey(Produtos, on_delete=models.CASCADE)
-    quantidade = models.PositiveIntegerField(default=1)    
+    quantidade = models.PositiveIntegerField(default=1)
+    subtotal = models.DecimalField(decimal_places=2, max_digits=20)
