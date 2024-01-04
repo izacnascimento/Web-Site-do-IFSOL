@@ -1,0 +1,83 @@
+{% extends 'layoutadmin.html' %}
+{% load static %}
+{% block conteudo %}
+
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <div class="row justify-content-end">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link link-dark " href="{% url 'pgcadastrar' %}"><span style="font-size: 35px;"><i class="bi bi-arrow-90deg-left"></i></span></a>
+                        </li>             
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section id="cadastrar-produto">
+            <h2>Cadastrar Produto</h2>
+            <!-- Formulário para cadastrar um novo produto -->
+            <form class="col-6" action="cadastrarprodutos" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                {% if msg %}
+                <div class="alert {{class}}">
+                    {{msg}}
+                </div>
+                {% endif %}
+                <div class=" mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Nome</label>
+                    <input type="text" class="form-control" name="nomeproduto" id="nomeproduto">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Preço</label>
+                    <input type="number" class="form-control" name="precoproduto" id="precoproduto">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Unidade de Medida</label>
+                    <input type="text" class="form-control" name="unidadeproduto" id="unidadeproduto">
+                </div>
+                <label for="exampleFormControlInput1" class="form-label">Imagem do Produto</label>
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" name="imagemproduto" id="imagemproduto">
+                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                </div>
+                <input type="submit" class="btn btn-success" value="Cadastrar Produto">
+            </form>
+        </section>
+
+        <table class="table table-light table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Unidade de Medida</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- Aqui você pode adicionar linhas com informações de cada pedido -->
+                {% if listagem_de_produtos %}
+                {% for listagem_de_produtos in listagem_de_produtos %}
+                <tr>
+                    <td>{{listagem_de_produtos.nome}}</td>
+                    <td>{{listagem_de_produtos.preco}}</td>
+                    <td>{{listagem_de_produtos.unidade_de_medida}}</td>
+                    <td>
+                        <!-- Botões de ações para cada pedido, por exemplo, editar ou excluir -->
+                        <a class="btn btn-danger" data-item-id="{{listagem_de_produtos.id}}"
+                            href="/exclui_produto/{{ listagem_de_produtos.id }}/">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                <!-- Adicione mais linhas conforme necessário -->
+            </tbody>
+        </table>
+    </div>
+</body>
+
+
+{% endblock conteudo %}

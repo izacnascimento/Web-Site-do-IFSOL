@@ -1,0 +1,82 @@
+{% extends 'layoutadmin.html' %}
+{% load static %}
+{% block conteudo %}
+
+
+<body>
+    <div class="container">
+        <section id="pedidos">
+            <h2>Pedidos dos Usuários</h2>
+            <!-- Aqui você pode listar os pedidos dos usuários -->
+            <!-- Por exemplo, uma tabela com informações dos pedidos -->
+            <table class="table table-light table-striped">
+                <thead>
+                    <tr>
+                        <th>ID do Pedido</th>
+                        <th>Usuário</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aqui você pode adicionar linhas com informações de cada pedido -->
+                    {%for i in lista %}
+                    <tr>
+                        <td>{{i.id}}</td>
+                        <td>{{i.usuario}}</td>
+                        <td>{{i.get_total}}</td>
+                        <td>{{i.ativo}}</td>
+                        <td>
+                            <!-- Botões de ações para cada pedido, por exemplo, editar ou excluir -->
+                            <a class="btn btn-success" href="{% url 'confirmar_compra' i.id %}">Confirmar</a>
+                            <a class="btn btn-warning" href="{% url 'detalhar_pedido' i.id %}">Detalhar</a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    <!-- Adicione mais linhas conforme necessário -->
+                </tbody>
+            </table>
+        </section>
+        
+        <div class="container text-center">
+            <div class="row justify-content-between">
+                <div class="col-5 ">
+                    <h2>Cadastrar Produto</h2>
+                    <div class="my-5 bg-success">
+                        <a class="py-5 nav-link link-light" href="{% url 'pgcadastrar' %}"><span style="font-size: 50px;"><i
+                                class="bi bi-plus-circle-fill"></i></span></a>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <h2>Historico de Pedidos</h2>
+                    <div class="my-5">
+                        <table class="table table-light table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID do Pedido</th>
+                                <th>Total</th>
+                                <th>Confirmado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Aqui você pode adicionar linhas com informações de cada pedido -->
+                            {% for i in carrinhos_confirmados %}
+                            <tr>
+                                <td>{{ i.id }}</td>
+                                <td>{{ i.get_total }}</td>
+                                <td>{{ i.confirmado }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+{% endblock conteudo %}

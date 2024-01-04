@@ -23,7 +23,13 @@ class Produtos(models.Model):
 
 class Carrinho(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='carrinhos')
-    status = models.BooleanField()
+    ativo = models.BooleanField(default=True)
+    confirmado = models.BooleanField(default=False)
+    def get_total (self):
+        total = 0
+        for i in self.itens.all():
+            total = total + i.subtotal
+        return total
 
 class ItemCarrinho(models.Model):
     carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE, related_name='itens')

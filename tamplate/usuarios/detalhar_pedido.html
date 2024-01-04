@@ -1,0 +1,35 @@
+{% extends 'layoutadmin.html' %}
+{% load static %}
+{% block conteudo %}
+
+
+<body>
+    <div class="container">
+        <h2 class="my-4">Detalhes do Pedido</h2>
+        <table class="table table-light table-striped">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Valor</th>
+                    <th>Quantidade</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aqui você pode adicionar linhas com informações de cada pedido -->
+                {% for item in carrinho.itens.all %}
+                <tr>
+                    <td>{{item.produto.nome}}</td>
+                    <td>{{item.produto.preco}}</td>
+                    <td>{{item.quantidade}}</td>
+                    <td>{{item.subtotal}}</td>
+                </tr>
+                {%endfor%}
+                <!-- Adicione mais linhas conforme necessário -->
+            </tbody>
+        </table>
+    </div>
+</body>
+
+
+{% endblock conteudo %}

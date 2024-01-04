@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from .models import Produtos
@@ -8,38 +9,14 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.http import JsonResponse
 from rest_framework import status
-# from django.contrib.admin.views.decorators import staff_member_required
-# from django.shortcuts import render
 
-# @staff_member_required
-# def superuser_management(request):
-#     # Lógica para gerenciar os dados
-#     # ...
-
-#     return render(request, 'usuarios/superuser.html')
+def superuser (request):
+    carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
+    lista = Carrinho.objects.filter(ativo=False,confirmado=False)
+    return render (request, 'usuarios/superuser.html', {'lista':lista,'carrinhos_confirmados': carrinhos_confirmados})
 
 def index (request):
     return render (request, 'index.html')
-
-def login (request):
-    if request.method == "POST":
-        email = request.POST['inputEmail4']
-        senha = request.POST['inputPassword4']
-        
-        if User.objects.filter(email=email).exists():
-            nome = User.objects.filter(email=email).values_list('username', flat=True).get()
-            user = auth.authenticate(request, username=nome, password=senha)
-            if user is not None:
-                auth.login(request, user)
-                return redirect('dashboard')
-            
-        return redirect('login')
-    else:
-        
-        data = {}
-        data['msg'] = 'Email ou Senha inválidos!'
-        data['class'] = 'alert-danger'
-        return render (request, 'login.html',data)
 
 def contato (request):
     return render (request, 'contato.html')
@@ -54,15 +31,19 @@ def produtos (request):
     }
     return render (request, 'produtos.html', dados)
 
-
 def logcarrinho (request):
     if request.user.is_authenticated:  
-        carrinho =  request.user.carrinhos.filter(status = True).last()
+        carrinho =  request.user.carrinhos.filter(ativo = True).last()
+        hist =  request.user.carrinhos.filter(ativo = False)
+
+        if carrinho is None:
+            carrinho = Carrinho(usuario = request.user)
+            carrinho.save()
         itens = carrinho.itens.all()
         total = 0
         for i in itens:
             total += i.produto.preco * i.quantidade
-        return render (request, 'usuarios/logcarrinho.html', {'itens': itens, 'total': total,})
+        return render (request, 'usuarios/logcarrinho.html', {'itens': itens, 'total': total, 'carrinho':carrinho, 'hist':hist})
     else:
         return render (request, 'index.html')
 
@@ -101,11 +82,11 @@ def logperfil (request):
 
 def addcarrinho (request, id):
     produto = Produtos.objects.get(id=id)
-    carrinho =  request.user.carrinhos.filter(status = True).last()
+    carrinho =  request.user.carrinhos.filter(ativo = True).last()
     if carrinho is None:
         carrinho = Carrinho() 
         carrinho.usuario = request.user
-        carrinho.status = True
+        carrinho.ativo = True
         carrinho.save()
 
     p = carrinho.itens.filter(produto__id=id).first()
@@ -154,9 +135,38 @@ def apagar_item_carrinho(request, item_id):
        
     return redirect("/logcarrinho")
 
+def exclui_produto(request, item_id):
+    if request.method == 'GET':
+        produto = get_object_or_404(Produtos, pk=item_id)
+        produto.delete()
+        # return redirect('pgcadastrar')  # Redireciona para a página correta após a exclusão
+    return redirect('pgcadastrar') 
+
 def atualizar_subtotal(request, item_id):
     item = ItemCarrinho.objects.get(pk=item_id)
     item.quantidade = quantidade
     subtotal = item.produto.preco * quantidade
         
     return subtotal
+
+def finalizar_carrinho (request, id):
+    carrinho = Carrinho.objects.get(id=id)
+    if carrinho is not None:
+        carrinho.ativo = False
+        carrinho.save()
+    return redirect ('logcarrinho')
+
+@login_required
+def confirmar_compra(request, carrinho_id):
+    if request.user.is_superuser:
+        carrinho = get_object_or_404(Carrinho, pk=carrinho_id)
+        carrinho.confirmado = True
+        carrinho.save()
+        return redirect('controle')  # Redirecione para a página de confirmação ou outra página desejada após a confirmação
+    else:
+        # Se o usuário não for um superusuário, talvez você queira redirecioná-lo para outra página ou exibir uma mensagem de erro
+        return redirect('controle')
+    
+# def pedidos_confirmados(request):
+#     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
+#     return render(request, 'usuarios/superuser.html', {'carrinhos_confirmados': carrinhos_confirmados})

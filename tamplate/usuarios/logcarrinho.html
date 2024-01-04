@@ -1,70 +1,118 @@
-{% extends 'layout.html' %}  
+{% extends 'layout.html' %}
 {% load static %}
-{% block conteudo %} 
- 
+{% block conteudo %}
+
 <body>
 
 
     <main>
         <div class="container">
-            <h1 class="text-center mt-3 mb-2">Carrinho de Compras</h1>
-            <hr>
-            <ul class="list-group mb-3">
-                {%for i in itens%}
-                <li class="item-carrinho list-group-item py-3">
-                    <div class="row g-3">
-                        <div class="col-4 col-md-3 col-lg-2">
-
-
-                            {% if i.produto.imagem == '' %}
-                            <img src="{% static 'img/sem_foto.jpg' %}" class="card-img-top">       
-                            {% else %}
-                            <img class="card-img-top" src="{{ i.produto.imagem.url }}" alt="img-thumbnail">
-                            {% endif %}
-                            
-
-                        </div>
-                        <div class="col-8 col-md-9 col-lg-7 col-xl-8 text-left align-self-center">
-                        <h4><b><a href="#" class="text-decoration-none text-success">{{i.produto.nome}}</a></b></h4>
-                        <h4>
-                            <small>
-                                 <!-- Texto para descrever o Produto  -->
-                            </small>
-                        </h4>
-                    </div>
-                    <div class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-4 offset-md-8 col-lg-3 offset-lg-0 col-xl-2 align-self-center mt-3">
-                        <div class="input-group"> 
-                            <input type="number" class="form-control text-center border-warning" id="quantidade-{{i.id}}" value="{{i.quantidade}}">
-                            
-                            <a class="btn-apagar btn btn-outline-warning btn-sm" data-item-id="{{i.id}}" href="/apagar_item_carrinho/{{i.id}}/">
-                                
-                                    <i class="fa-solid fa-trash"></i>
-                                
-                            </a>
-                        </div>
-                    </div>
-                    <div class="text-right col-12">
-                        
-                    
-                        
-                        <small class="text-secondary">Valor {{i.produto.unidade_de_medida}}: R$ {{i.produto.preco}} </small>
-                        <br>
-                         <span class=" text-dark" >Subtotal do Item: R$ <span class="subtotal" id = "{{i.id}}">{{i.subtotal}}</span></span> 
-                    </div>
-                    </div>
+            <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#carrinho"
+                        type="button" role="tab" aria-controls="home" aria-selected="true">Carrinho</button>
                 </li>
-                {%endfor%}
-                {%if total > 0 %}
-                <li class="text-right list-group-item mb-5 py-3">
-                    <h4 class="text-dark mb-3"> Valor Total: R$ <span class="total_carrinho" id="total_carrinho">{{total}}</span></h4>
-                    <button class="btn btn-success btn-lg">Solicitar</button>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#historico" type="button"
+                        role="tab" aria-controls="profile" aria-selected="false">Histórico</button>
                 </li>
-                {%else%}
-                <div class="alert alert-warning" role="alert">
-                    Seu carrinho está vazio.
-                </div>
-                {%endif%}
             </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="carrinho" role="tabpanel">
+                    <h1 class="text-center mt-3 mb-2">Carrinho de Compras</h1>
+                    <hr>
+                    <ul class="list-group mb-3">
+                        {%for i in itens%}
+                        <li class="item-carrinho list-group-item py-3">
+                            <div class="row g-3">
+                                <div class="col-4 col-md-3 col-lg-2">
+
+
+                                    {% if i.produto.imagem == '' %}
+                                    <img src="{% static 'img/sem_foto.jpg' %}" class="card-img-top">
+                                    {% else %}
+                                    <img class="card-img-top" src="{{ i.produto.imagem.url }}" alt="img-thumbnail">
+                                    {% endif %}
+
+
+                                </div>
+                                <div class="col-8 col-md-9 col-lg-7 col-xl-8 text-left align-self-center">
+                                    <h4><b><a href="#"
+                                                class="text-decoration-none text-success">{{i.produto.nome}}</a></b>
+                                    </h4>
+                                    <h4>
+                                        <small>
+                                            <!-- Texto para descrever o Produto  -->
+                                        </small>
+                                    </h4>
+                                </div>
+                                <div
+                                    class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-4 offset-md-8 col-lg-3 offset-lg-0 col-xl-2 align-self-center mt-3">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control text-center border-warning"
+                                            id="quantidade-{{i.id}}" value="{{i.quantidade}}">
+
+                                        <a class="btn-apagar btn btn-outline-warning btn-sm" data-item-id="{{i.id}}"
+                                            href="/apagar_item_carrinho/{{i.id}}/">
+
+                                            <i class="fa-solid fa-trash"></i>
+
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="text-right col-12">
+
+
+
+                                    <small class="text-secondary">Valor {{i.produto.unidade_de_medida}}: R$
+                                        {{i.produto.preco}} </small>
+                                    <br>
+                                    <span class=" text-dark">Subtotal do Item: R$ <span class="subtotal"
+                                            id="{{i.id}}">{{i.subtotal}}</span></span>
+                                </div>
+                            </div>
+                        </li>
+                        {%endfor%}
+                        {%if total > 0 %}
+                        <li class="text-right list-group-item mb-5 py-3">
+                            <h4 class="text-dark mb-3"> Valor Total: R$ <span class="total_carrinho"
+                                    id="total_carrinho">{{total}}</span></h4>
+                            <a class="btn btn-success btn-lg"
+                                href="{% url 'finalizar_carrinho' carrinho.pk %}">Solicitar</a>
+                        </li>
+                        {%else%}
+                        <div class="alert alert-warning" role="alert">
+                            Seu carrinho está vazio.
+                        </div>
+                        {%endif%}
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="historico" role="tabpanel" aria-labelledby="profile-tab">
+                    <table class="table table-light table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID do Pedido</th>
+                                <th>Total</th>
+                                <th>Confirmado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Aqui você pode adicionar linhas com informações de cada pedido -->
+                            {%for i in hist %}
+                            <tr>
+                                <td>{{i.id}}</td>
+                                <td>{{i.get_total}}</td>
+                                <td>{{i.confirmado}}</td>
+            
+                            </tr>
+                            {%endfor%}
+                            <!-- Adicione mais linhas conforme necessário -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
 
 
         </div>
@@ -74,37 +122,37 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const botoesApagar = document.querySelectorAll('.btn-apagar');
-    
-        botoesApagar.forEach(function(botao) {
-            botao.addEventListener('click', function(event) {
+
+        botoesApagar.forEach(function (botao) {
+            botao.addEventListener('click', function (event) {
                 const itemId = this.getAttribute('data-item-id');
                 const itemParaRemover = this.closest('.item-carrinho'); // Obtém o elemento pai do item a ser removido
-    
+
                 // Realiza a requisição GET para excluir o item do carrinho
-                fetch('/apagar_item_carrinho/'+itemId+'/', {
+                fetch('/apagar_item_carrinho/' + itemId + '/', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRFToken': getCookie('csrftoken')
                     }
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.message);
-                    // Remove o elemento da interface após a exclusão bem-sucedida
-                    if (itemParaRemover) {
-                        itemParaRemover.remove();
-                        atualizar_total();
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao apagar o item:', error);
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message);
+                        // Remove o elemento da interface após a exclusão bem-sucedida
+                        if (itemParaRemover) {
+                            itemParaRemover.remove();
+                            atualizar_total();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao apagar o item:', error);
+                    });
             });
         });
-    
+
         // Função para obter o token CSRF
         function getCookie(name) {
             let cookieValue = null;
@@ -121,41 +169,41 @@
             return cookieValue;
         }
     });
-    
 
-    document.addEventListener('DOMContentLoaded', function() {
+
+    document.addEventListener('DOMContentLoaded', function () {
         const inputsQuantidade = document.querySelectorAll('.form-control');
-    
-        inputsQuantidade.forEach(function(input) {
-            input.addEventListener('change', function(event) {
+
+        inputsQuantidade.forEach(function (input) {
+            input.addEventListener('change', function (event) {
                 const itemId = this.id.split('-')[1]; // Obtém o ID do item
-    
+
                 // Obtém a nova quantidade do input
                 const novaQuantidade = this.value;
-    
+
                 // Realiza a requisição AJAX para atualizar a quantidade no banco de dados
-                fetch('/atualizar_quantidade/'+itemId+'/?nova_quantidade='+novaQuantidade, {
+                fetch('/atualizar_quantidade/' + itemId + '/?nova_quantidade=' + novaQuantidade, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRFToken': getCookie('csrftoken') // Função para obter o token CSRF
                     }
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.message); // Exibe a mensagem retornada pelo Django no console
-                    $("#"+itemId).html(data.subtotal)  
-                    atualizar_total();              
-                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message); // Exibe a mensagem retornada pelo Django no console
+                        $("#" + itemId).html(data.subtotal)
+                        atualizar_total();
+                    })
 
-                .catch(error => {
-                    console.error('Erro ao atualizar a quantidade:', error);
-                });
+                    .catch(error => {
+                        console.error('Erro ao atualizar a quantidade:', error);
+                    });
 
-                
+
             });
         });
-    
+
         // Função para obter o token CSRF
         function getCookie(name) {
             let cookieValue = null;
@@ -172,12 +220,12 @@
             return cookieValue;
         }
     });
-      // Código JavaScript para atualizar o valor total do item quando a quantidade mudar
-      document.addEventListener('DOMContentLoaded', function() {
+    // Código JavaScript para atualizar o valor total do item quando a quantidade mudar
+    document.addEventListener('DOMContentLoaded', function () {
         const quantidades = document.querySelectorAll('.quantidade');
 
-        quantidades.forEach(function(quantidadeInput) {
-            quantidadeInput.addEventListener('change', function() {
+        quantidades.forEach(function (quantidadeInput) {
+            quantidadeInput.addEventListener('change', function () {
                 const itemContainer = this.closest('.item-carrinho');
                 const preco = parseFloat(itemContainer.querySelector('p:nth-child(2)').textContent.split(' ')[1]); // Obtém o preço do produto
                 const quantidade = parseInt(this.value); // Obtém a nova quantidade
@@ -187,12 +235,12 @@
             });
         });
     });
-    
-    $(document).ready(function() {
-        $('.quantidade').on('change', function() {
+
+    $(document).ready(function () {
+        $('.quantidade').on('change', function () {
             const itemID = $(this).closest('.item-carrinho').data('item-id');
             const quantidade = $(this).val();
-            
+
             $.ajax({
                 type: 'POST',
                 url: '/atualizar_subtotal/' + itemID,
@@ -200,22 +248,22 @@
                     'quantidade': quantidade,
                     'csrfmiddlewaretoken': '{{ csrf_token }}'
                 },
-                success: function(data) {
+                success: function (data) {
                     $('.item-carrinho[data-item-id="${itemID}"] .subtotal').text('R$ ' + data.subtotal);
                 }
             });
         });
     });
 
-    
-    function atualizar_total(){
-        let total = 0 
-        $(".subtotal").each(function(){
-            total= total + parseFloat($(this).html());
+
+    function atualizar_total() {
+        let total = 0
+        $(".subtotal").each(function () {
+            total = total + parseFloat($(this).html());
         });
         $('.total_carrinho').html(total);
     };
 
-    </script>
+</script>
 
 {% endblock conteudo %}
