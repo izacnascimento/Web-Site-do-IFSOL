@@ -13,7 +13,7 @@ background-color: #3b5c2c;
 
 #parceiros {
     /* background: #ced4da; */
-    color: rgb(39, 129, 170);
+    color: rgb(12, 12, 12);
     border-top: 5px solid rgba(11, 11, 12, 0.1);
     padding-top: 30px;
     border-bottom: 5px solid rgba(12, 12, 12, 0.1);
@@ -33,7 +33,7 @@ background-color: #3b5c2c;
 }
 
 .contact-box i {
-    color: #185f99;
+    color: #121213;
     border: solid 1px #f9f9f9;
     border-radius: 50%;
     width: 55px;
@@ -50,7 +50,7 @@ background-color: #3b5c2c;
 
 .contact-tit {
     font-weight: bold;
-    color: #2b8bdf;
+    color: #141414;
 
 }
 
@@ -60,7 +60,7 @@ background-color: #3b5c2c;
 
 #contato h3 {
     padding-top: 50px;
-    color: #265072;
+    color: #121213;
 }
 
 
@@ -130,7 +130,7 @@ small.limitadorDeLinha {
 
 
 .bg-layout {
-    background-color: #7fa36e;
+    background-color: #70a05a;
 
 }
 
@@ -138,4 +138,23 @@ small.limitadorDeLinha {
 .page1-section {
     background-color: #e6f0f0;
 
+}
+
+.container-fluid1 {
+    background-color: #e6f0f0;
+}
+
+.card-tit {
+    background-color: #02090f;
+}
+
+.btn1-warning {
+    color: #368171;
+    background-color: #80c2bc;
+    border-color: #2895b1;
+
+}
+
+.bg-light2 {
+    background-color:#e6f0f0 ;
 }
