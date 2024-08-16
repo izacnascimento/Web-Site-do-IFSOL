@@ -8,19 +8,15 @@ height: 80vh;
 }
 
 .carousel-indicators .active{
-background-color: #44ab14;
-}
-
-.carousel-caption{
-background-color: rgba(0, 128, 0, 0.7);
+background-color: #3b5c2c;
 }
 
 #parceiros {
     /* background: #ced4da; */
-    color: black;
-    border-top: 5px solid rgba(255, 193, 7, 0.1);
+    color: rgb(39, 129, 170);
+    border-top: 5px solid rgba(11, 11, 12, 0.1);
     padding-top: 30px;
-    border-bottom: 5px solid rgba(255, 193, 7, 0.1);
+    border-bottom: 5px solid rgba(12, 12, 12, 0.1);
     padding-bottom: 100px;
 }
 
@@ -34,11 +30,10 @@ background-color: rgba(0, 128, 0, 0.7);
     padding-bottom: 50px;
     padding-top: 50px;
     margin-bottom: 50px;
-    border-bottom: 1px solid #44ab14;
 }
 
 .contact-box i {
-    color: #f9f9f9;
+    color: #185f99;
     border: solid 1px #f9f9f9;
     border-radius: 50%;
     width: 55px;
@@ -53,26 +48,21 @@ background-color: rgba(0, 128, 0, 0.7);
     color: #d6caca;
 }
 
-.contact-title {
+.contact-tit {
     font-weight: bold;
-    color: #ffc107;
+    color: #6c757d;
 
 }
 
 #contato {
-    background-color:  #28a745;
+    background-color:  #7fa36e;
 }
 
 #contato h3 {
     padding-top: 50px;
-    color: #f9f9f9;
+    color: #265072;
 }
 
-/* Rodapé */
-
-#rodape {
-    background-color: rgba(255, 193, 5, 0.801);
-}
 
 #rodape .container {
     padding: 10px 0;
@@ -136,4 +126,10 @@ small.limitadorDeLinha {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+
+.bg-layout {
+    background-color: #7fa36e;
+
 }

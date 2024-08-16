@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE cardapio SYSTEM "cardapio.xsd">
+<!DOCTYPE cardapio SYSTEM "definicoes.dtd">
+<cardapio>
+    <prato id="prato1">
+        <nome>cachorro quente</nome>
+        <descricao>cachorro quente Brasileiro</descricao>
+        <ingredientes>
+               <ingrediente>Cebola</ingrediente>
+               <ingrediente>ovo</ingrediente> 
+               <ingrediente>ketchup</ingrediente> 
+               <ingrediente>mostanda</ingrediente> 
+               <ingrediente>pão</ingrediente>       
+        </ingredientes>
+        <preco> 8 reais </preco>
+        <calorias>400 kcal</calorias>
+        <tempoPreparo>10 minunto</tempoPreparo>
+    </prato>
+    <prato id="Prato2">
+        <nome>bolo de ovos</nome>
+        <descricao>bolo de ovos Brasileiro</descricao>
+        <ingredientes>
+            <ingrediente>Marteiga</ingrediente>
+            <ingrediente>fermento</ingrediente> 
+            <ingrediente>ovos</ingrediente> 
+            <ingrediente>refrigerante</ingrediente>       
+        </ingredientes>     
+        <preco>8 reias</preco>
+        <calorias>800 kcal</calorias>
+        <tempoPreparo>17 minunto</tempoPreparo>
+    </prato>
+    
+    <prato id="Prato3">
+        <nome>Lasanha Tradicional</nome>
+        <descricao> Lasanha Tradicional </descricao>
+        <ingredientes>
+            <ingrediente>1 cebola ralada</ingrediente>
+            <ingrediente>500 g de massa de lasanha</ingrediente> 
+            <ingrediente>3 colheres de óleo</ingrediente>     
+        </ingredientes>  
+        <preco>8 reias</preco>
+        <calorias>800 kcal</calorias>
+        <tempoPreparo>50 minunto</tempoPreparo>
+    </prato>
+    <prato id="Prato4">
+        <nome>Macarronada</nome>
+        <descricao>Macarronada</descricao>
+        <ingredientes>
+            <ingrediente>1 lata de milho verde</ingrediente>
+            <ingrediente>1 lata de ervilha</ingrediente> 
+            <ingrediente> 1 lata de molho de tomate</ingrediente>    
+        </ingredientes>  
+        <preco>9 reias</preco>
+        <calorias>600 kcal</calorias>
+        <tempoPreparo>30 minunto</tempoPreparo>
+    </prato>
+    <prato id="Prato5">
+        <nome>Pizza Mussarela </nome>
+        <descricao>Pizza Mussarela tradicional </descricao>
+        <ingredientes>
+            <ingrediente>1 copo de água morna</ingrediente>
+            <ingrediente>500 gr de Farinha de Trigo</ingrediente> 
+            <ingrediente> 1 colher (chá) de Açúcar</ingrediente>    
+        </ingredientes>  
+        <preco>35 reias</preco>
+        <calorias>500 kcal</calorias>
+        <tempoPreparo>20 minunto</tempoPreparo>
+    </prato>
+    <prato id="Prato6">
+        <nome>Pizza de queijo</nome>
+        <descricao>Pizza de queijo Brasileiro</descricao>
+        <ingredientes>
+            <ingrediente>2 xícaras de farinha de trigo</ingrediente>
+            <ingrediente>1/2 colher de sal</ingrediente> 
+            <ingrediente>1/2 colher de sal</ingrediente>    
+        </ingredientes>
+        <preco>30 reias</preco>
+        <calorias>450 kcal</calorias>
+        <tempoPreparo>20 minunto</tempoPreparo>
+    </prato>
+</cardapio>
