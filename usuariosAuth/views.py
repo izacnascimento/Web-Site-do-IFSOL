@@ -8,7 +8,8 @@ from info.models import Usuario
 from info.models import Produtos
 from info.models import Carrinho
 from info.models import ItemCarrinho
-
+from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login
 
 def cadastro (request):
     if request.method == 'POST':
@@ -41,33 +42,30 @@ def cadastro (request):
     
     else:
         return render (request, 'usuarios/cadastro.html')
-    
-def login (request):
-    
+
+def login(request):
     if request.method == "POST":
         email = request.POST['inputEmail4']
         senha = request.POST['inputPassword4']
-        
-        # if request.user.is_authenticated and request.user.is_superuser:
-        #         # Se for um superusuário, redirecione para a página do superusuário
-        #         return HttpResponseRedirect(reverse_lazy('superuser_management'))
-        
+
+        # Verifique se o usuário com o email existe
         if User.objects.filter(email=email).exists():
             nome = User.objects.filter(email=email).values_list('username', flat=True).get()
-            user = auth.authenticate(request, username=nome, password=senha)
+            
+            # Tente autenticar o usuário com o nome de usuário e senha
+            user = authenticate(request, username=nome, password=senha)
+            
             if user is not None:
-                auth.login(request, user)
-                if user.is_superuser:
-                    return redirect('controle')
-                else:
-                    return redirect('index')
-        return redirect('login')
+                auth_login(request, user)
+                return redirect('index')  # Redireciona para a página inicial.
+            else:
+                messages.error(request, "Senha inválida!")
+        else:
+            messages.error(request, "Email não encontrado!")
         
-    else:    
-        data = {}
-        data['msg'] = 'Email ou Senha inválidos!'
-        data['class'] = 'alert-danger'
-        return render (request, 'usuarios/login.html',data)
+        return redirect('login')  # Redireciona de volta para a página de login
+
+    return render(request, 'usuarios/login.html')
              
 def logout (request):
     auth.logout(request)

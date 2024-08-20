@@ -162,3 +162,32 @@ small.limitadorDeLinha {
 .container2 {
     background-color: #e9ecef;
 }
+
+.messages {
+    list-style: none;
+    padding: 0;
+}
+
+.messages li {
+    padding: 10px;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.container4 {
+background-color: #f0f0f0; /* Cor de fundo do rodapé */
+color: #333; /* Cor do texto */
+padding: 30px;
+}
+
+.social-icons a {
+color: #333; /* Cor dos ícones das redes sociais */
+}
+
+.social-icons a:hover {
+color: #007bff; /* Cor dos ícones ao passar o mouse */
+}

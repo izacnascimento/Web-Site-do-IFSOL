@@ -2,32 +2,41 @@
 {% load static %}
 {% block conteudo %}
 
-
-
 <body>
+  <div class="container mt-5">
+    <div class="row align-items-center">
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light" method="post" action="{% url 'login' %}" name="formlogin" id="formlogin">
+          {% csrf_token %}
+          <h2>Login</h2>
 
-    <div class="container mt-5">
-        <div class="row align-items-center">
-            <div class="col-md-10 mx-auto col-lg-5">
-                <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light" method="post" action="{% url 'login' %}" name="formlogin" id="formlogin">
-                    {% csrf_token %}
-                    <h2>Login</h2>
-                    {% if msg %}
-                        <div class="alert {{ class }}">{{ msg }}</div>
-                    {% endif %}
-                    <div class="form-floating was-validated mb-3">
-                        <label for="inputEmail4" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="inputEmail4" id="inputEmail4" placeholder="Email" required>
-                    </div>
-                    <div class="form-floating was-validated mb-3">
-                        <label for="inputPassword4" class="form-label">Senha</label>
-                        <input type="password" class="form-control" name="inputPassword4" id="inputPassword4" placeholder="Senha" required>
-                    </div>
-                    <input type="submit" class="btn btn-success" value="Entrar">
-                </form>
-            </div>
-        </div>
+          <!-- Exibição de Mensagens -->
+          {% if messages %}
+          <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                  <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</li>
+            {% endfor %}
+          </div>
+            {% endif %}
+
+          <!-- Campo de Email -->
+          <div class="form-floating was-validated mb-3">
+            <label for="inputEmail4" class="form-label">Email</label>
+            <input type="email" class="form-control" name="inputEmail4" id="inputEmail4" placeholder="Email" required>
+          </div>
+
+          <!-- Campo de Senha -->
+          <div class="form-floating was-validated mb-3">
+            <label for="inputPassword4" class="form-label">Senha</label>
+            <input type="password" class="form-control" name="inputPassword4" id="inputPassword4" placeholder="Senha" required>
+          </div>
+
+          <!-- Botão de Enviar -->
+          <input type="submit" class="btn btn-success" value="Entrar">
+        </form>
+      </div>
     </div>
+  </div>
 </body>
 
 {% endblock conteudo %}
