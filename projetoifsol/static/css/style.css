@@ -191,3 +191,110 @@ color: #333; /* Cor dos ícones das redes sociais */
 .social-icons a:hover {
 color: #007bff; /* Cor dos ícones ao passar o mouse */
 }
+
+.table-primary1 {
+    background-color: #70a05a; /* verde claro */
+    color: #121213(113, 122, 119);
+}
+
+.table-light {
+    background-color: #9a9e98; /* cinza claro */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #9a9e98; /* Cinza claro */
+}
+
+
+/* Estilo para a tabela */
+table.table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #f8f9fa;
+}
+
+/* Estilo para o cabeçalho completo (toda a linha superior) */
+.thead{
+    background-color: #70a05a; /* Cor verde clara */
+    border: 1px solid #000000; /* Borda preta */
+    color: black;
+    text-align: left;
+}
+
+/* Estilo para as células */
+table.table th, table.table th {
+    padding: 8px;
+}
+
+/* Cor alternada nas linhas */
+.table{
+    background-color: #e9ecef;
+}
+
+.table{
+    background-color: #ffffff;
+}
+
+/* Estilo da imagem em miniatura */
+table.table .img-thumbnail {
+    width: 100px;
+    height: auto;
+}
+
+/* Estilo do botão */
+.btn-success1 {
+    background-color: #5f925f;
+    border-color: #3a8d4c;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+
+.logo-centered {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.form-cadastro {
+    background-color: #f8f9fa; /* Fundo claro */
+    border-color: #28a745; /* Cor da borda verde */
+}
+
+.form-cadastro h2 {
+    color: #28a745; /* Verde suave no título */
+}
+
+.form-control {
+    border-color: #28a745; /* Borda verde nos campos */
+    background-color: #e9f7ef; /* Fundo leve e esverdeado nos campos */
+}
+
+.btn-success1 {
+    background-color: #3e8d50;
+    border-color: #92c49d;
+    color: white;
+}
+
+.btn-success1:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+
+  /* CSS Interno */
+  .thead-custom {
+    background-color: #5f925f; /* Verde claro */
+    color: white; /* Verde escuro para o texto */
+}
+
+.thead-custom th {
+    font-weight: bold;
+}
+
+.text-dark {
+    color: #000; /* Preto para o título do histórico de pedidos */
+}

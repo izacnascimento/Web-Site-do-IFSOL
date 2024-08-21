@@ -3,36 +3,40 @@
 {% block conteudo %}
 
 <body>
-  <div class="container mt-5">
-    <div class="row align-items-center">
-      <div class="col-md-10 mx-auto col-lg-5">
-        <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light" method="post" action="{% url 'login' %}" name="formlogin" id="formlogin">
+  <div class="container mt-5 mb-4"> <!-- Adiciona uma margem superior e inferior ao contêiner -->
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-5"> <!-- Ajusta a largura das colunas -->
+        <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light shadow" method="post" action="{% url 'login' %}" name="formlogin" id="formlogin">
           {% csrf_token %}
-          <h2>Login</h2>
+          <h2 class="text-center mb-4" style="color: #849da3;">Login</h2> <!-- Centraliza o título e ajusta a margem inferior -->
 
           <!-- Exibição de Mensagens -->
           {% if messages %}
-          <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" role="alert">
+              <ul class="mb-0">
                 {% for message in messages %}
                   <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</li>
-            {% endfor %}
-          </div>
-            {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
 
           <!-- Campo de Email -->
-          <div class="form-floating was-validated mb-3">
+          <div class="form-floating mb-3">
             <label for="inputEmail4" class="form-label">Email</label>
             <input type="email" class="form-control" name="inputEmail4" id="inputEmail4" placeholder="Email" required>
           </div>
 
           <!-- Campo de Senha -->
-          <div class="form-floating was-validated mb-3">
+          <div class="form-floating mb-3">
             <label for="inputPassword4" class="form-label">Senha</label>
             <input type="password" class="form-control" name="inputPassword4" id="inputPassword4" placeholder="Senha" required>
           </div>
 
           <!-- Botão de Enviar -->
-          <input type="submit" class="btn btn-success" value="Entrar">
+          <div class="d-flex justify-content-center mt-4">
+            <input type="submit" class="btn btn-success px-5 py-2" value="Entrar" style="border-radius: 50px;">
+          </div>
         </form>
       </div>
     </div>

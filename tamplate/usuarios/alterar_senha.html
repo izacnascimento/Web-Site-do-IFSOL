@@ -2,40 +2,40 @@
 {% load static %}
 {% block conteudo %} 
 
-
 <body>
-
 
     <!-- Local de alterar senha  -->
 
-
    <div class="container mt-5">
-        <div class="row aling-items-center">
-            <div class="col-md-10 mx-auto col-lg-5">
-                <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light" method="post" action="{% url 'AlterarSenha' %}" name="formlogin" id="formlogin">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-8 col-lg-6">
+                <form class="needs-validation p-5 border rounded-3 bg-light shadow" method="post" action="{% url 'AlterarSenha' %}" name="formlogin" id="formlogin" style="background-color: #f8f9fa; border-radius: 10px;">
                     {% csrf_token %}
-                    <h2>Alterar Senha</h2>
+                    <h2 class="text-center mb-4" style="color: #849da3;">Alterar Senha</h2>
                     {% if msg %}
-                      <div class="alert {{class}}">
+                      <div class="alert {{class}} text-center">
                           {{msg}}
                       </div>
                     {% endif %}
-                    <div class="form-floating was-validated mb-3">
-                        <label for="inputPassword4" class="form-label">Nova Senha</label>
-                        <input type="password" class="form-control" name="inputPassword4" id="inputPassword4" placeholder="xxxxx" required>                    
+
+                    <div class="form-floating mb-4">
+                        <label for="inputPassword4" class="form-label">Nova Senha</label> 
+                        <input type="password" class="form-control" name="inputPassword4" id="inputPassword4" placeholder="Nova Senha" required>                  
                     </div>
-                    <div class="form-floating was-validated mb-3">
-                        <label for="inputPassword4" class="form-label">Comfirma Senha</label>
-                        <input type="password" class="form-control" name="inputrepsenha" id="inputrepsenha" placeholder="xxxxx" required>                       
+
+                    <div class="form-floating mb-4">
+                        <label for="inputrepsenha" class="form-label">Confirme Senha</label>
+                        <input type="password" class="form-control" name="inputrepsenha" id="inputrepsenha" placeholder="Confirme Senha" required>                       
                     </div>
-                    <input type="submit" class="btn btn-success" value="Salva">
+
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" class="btn btn-success1 px-5 py-2" value="Salvar" style="border-radius: 50px;">
+                    </div>
                 </form>
             </div>
         </div>
    </div>
 
-
 </body>
 
-
-{% endblock conteudo %} 
+{% endblock conteudo %}

@@ -140,6 +140,29 @@ def detalhar_pedido(request, carrinho_id):
     
     return render(request, 'usuarios/detalhar_pedido.html', {'carrinho': carrinho, 'itens_carrinho': itens_carrinho})
 
+def editar_produto(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+    if request.method == 'POST':
+        form = ProdutoForm(request.POST, request.FILES, instance=produto)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Produto atualizado com sucesso!')
+            return redirect('listar_produtos')
+        else:
+            messages.error(request, 'Erro ao atualizar o produto. Verifique os dados.')
+    else:
+        form = ProdutoForm(instance=produto)
+    return render(request, 'editar_produto.html', {'form': form, 'produto': produto})
+
+def excluir_produto(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+    if request.method == 'POST':
+        produto.delete()
+        messages.success(request, 'Produto excluído com sucesso!')
+        return redirect('listar_produtos')
+    return render(request, 'confirmar_exclusao.html', {'produto': produto})
+
+
 
 # @login_required
 # def confirmar_compra(request, carrinho_id):
