@@ -27,15 +27,15 @@ background-color: #3b5c2c;
 }
 
 .contact-box {
-    padding-bottom: 50px;
-    padding-top: 50px;
-    margin-bottom: 50px;
+    padding-bottom: 20px;
+    padding-top: 35px;
+    margin-bottom: 30px;
 }
 
 .contact-box i {
     color: #121213;
     border: solid 1px #f9f9f9;
-    border-radius: 50%;
+    border-radius: 40%;
     width: 55px;
     height: 55px;
     line-height: 55px;
@@ -59,28 +59,13 @@ background-color: #3b5c2c;
 }
 
 #contato h3 {
-    padding-top: 50px;
-    color: #121213;
+    padding-top: 30px;
 }
 
 
 #rodape .container {
-    padding: 10px 0;
+    padding: 5px 0;
     text-align: center;
-}
-
-#rodape .container p {
-    margin-bottom: 0;
-}
-
-#rodape .container a {
-    font-weight: bold;
-    color: #444;
-}
-
-#rodape .container a:hover {
-    text-decoration: none;
-    
 }
 
 #formlogin {
@@ -136,7 +121,7 @@ small.limitadorDeLinha {
 
 
 .page1-section {
-    background-color: #e6f0f0;
+    background-color: #f0f3f3;
 
 }
 
