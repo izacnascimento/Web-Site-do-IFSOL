@@ -1,0 +1,14 @@
+{% extends 'layoutadmin.html' %}
+{% block conteudo %}
+<main>
+    <div class="container">
+        <h1 class="text-center mt-4">Erro</h1>
+        <div class="alert alert-danger mt-4" role="alert">
+            Ocorreu um erro ao processar sua solicitação.
+        </div>
+        <div class="text-center mt-4">
+            <a class="btn btn-primary" href="{% url 'logcarrinho.html' %}">Voltar para a página inicial</a>
+        </div>
+    </div>
+</main>
+{% endblock conteudo %}

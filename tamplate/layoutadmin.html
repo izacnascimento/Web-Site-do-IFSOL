@@ -38,7 +38,7 @@
 
     <nav class="navbar navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand custom-logo" href="#">
                 <img src="{% static 'img/logo_ifsol.png' %}" class="img-fluid" width="100">
             </a>
         </div>
@@ -49,34 +49,24 @@
             <div class="container-fluid">
                 <div class="collapse text-center navbar-collapse">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link link-light" href="{% url 'controle' %}"><span style="font-size: 35px;"><i class="bi bi-house-door"></i></span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link link-light" href="{% url 'logout' %}"><span style="font-size: 35px;"><i class="bi bi-box-arrow-right"></i></span></a>
-                        </li>
-                    </ul>
+                        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 custom-icons-list">
+                            <li class="nav-item custom-icon-item">
+                                <a class="nav-link link-light custom-icons" href="{% url 'controle' %}">
+                                    <span><i class="bi bi-house-door"></i></span>
+                                    <span class="icon-text">Início</span>
+                                </a>
+                            </li>
+                            <li class="nav-item custom-icon-item">
+                                <a class="nav-link link-light custom-icons" href="{% url 'logout' %}">
+                                    <span><i class="bi bi-box-arrow-right"></i></span>
+                                    <span class="icon-text">Sair</span>
+                                </a>
+                            </li>
+                        </ul>
                 </div>
             </div>
         </nav>
     </header>
-
-
-    <!-- Rodapé -->
-
-
-    <!-- <span class="fixed-bottom">
-            <div id="rodape">
-                <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p>Desenvolvido por <a href="">Leandro Moura </a>  &copy; 2023</p>
-                            </div>
-                        </div>
-                </div>
-        </div>
-       </span> -->
-
 
     {% block conteudo %}
     {% endblock conteudo %}
