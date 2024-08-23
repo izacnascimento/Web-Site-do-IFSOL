@@ -145,15 +145,21 @@ def confirmar_compra(request, carrinho_id):
     carrinho = get_object_or_404(Carrinho, id=carrinho_id)
 
     if request.method == 'POST':
-        # Confirma a compra
-        carrinho.confirmado = True
-        carrinho.save()
+        # Verifica se o usuário confirmou ou rejeitou a compra
+        if 'confirmar' in request.POST:
+            # Confirma a compra
+            carrinho.confirmado = True
+            carrinho.save()
+            messages.success(request, 'Compra confirmada com sucesso!')
+        elif 'rejeitar' in request.POST:
+            # Rejeita a compra
+            carrinho.confirmado = False
+            carrinho.save()
+            messages.success(request, 'Compra rejeitada com sucesso!')
         
-        # Adiciona uma mensagem de sucesso
-        messages.success(request, 'Compra confirmada com sucesso!')
-        
-        # Redireciona para a página de controle ou a página de histórico
-        return redirect('controle')  # Ou redirecione para a página onde você exibe o histórico de pedidos
-
-    # Renderiza a página de confirmação de compra
+        # Redireciona para a página de controle após a ação
+        return redirect('controle')
+    
+    # Renderiza a página de confirmação
     return render(request, 'usuarios/confirmar_compra.html', {'carrinho': carrinho})
+

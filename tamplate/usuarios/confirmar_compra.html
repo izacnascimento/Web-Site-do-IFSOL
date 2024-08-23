@@ -4,13 +4,13 @@
     <div class="container">
         <h1 class="text-center mt-4">Confirmar Compra</h1>
         <div class="alert alert-warning mt-4" role="alert">
-            Tem certeza de que deseja confirmar esta compra?
+            Tem certeza de que deseja confirmar esta compra ou rejeitá-la?
         </div>
         <div class="text-center mt-4">
             <form method="POST">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-success">Confirmar</button>
-                <a class="btn btn-danger" href="{% url 'index' %}">Cancelar</a>
+                <button type="submit" name="confirmar" class="btn btn-success">Confirmar</button>
+                <button type="submit" name="rejeitar" class="btn btn-danger">Rejeitar</button>
             </form>
         </div>
     </div>
