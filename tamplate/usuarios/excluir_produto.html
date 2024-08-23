@@ -1,0 +1,16 @@
+{% extends 'layoutadmin.html' %}
+{% block conteudo %}
+<main>
+    <div class="container">
+        <h1 class="text-center mt-4">Confirmar Exclusão</h1>
+        <div class="alert alert-warning mt-4" role="alert">
+            Você tem certeza que deseja excluir o produto "{{ produto.nome }}"?
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Excluir</button>
+            <a class="btn btn-secondary" href="{% url 'index' %}">Cancelar</a>
+        </form>
+    </div>
+</main>
+{% endblock conteudo %}

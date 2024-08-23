@@ -2,12 +2,29 @@
 {% block conteudo %}
 <main>
     <div class="container">
-        <h1 class="text-center mt-4">Erro</h1>
-        <div class="alert alert-danger mt-4" role="alert">
-            Ocorreu um erro ao processar sua solicitação.
-        </div>
+        <h1 class="text-center mt-4">Editar Produto</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nomeproduto">Nome:</label>
+                <input type="text" class="form-control" name="nomeproduto" id="nomeproduto" value="{{ produto.nome }}" required>
+            </div>
+            <div class="form-group">
+                <label for="precoproduto">Preço:</label>
+                <input type="number" step="0.01" class="form-control" name="precoproduto" id="precoproduto" value="{{ produto.preco }}" required>
+            </div>
+            <div class="form-group">
+                <label for="unidadeproduto">Unidade de Medida:</label>
+                <input type="text" class="form-control" name="unidadeproduto" id="unidadeproduto" value="{{ produto.unidade_de_medida }}" required>
+            </div>
+            <div class="form-group">
+                <label for="imagemproduto">Imagem:</label>
+                <input type="file" class="form-control" name="imagemproduto" id="imagemproduto">
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
         <div class="text-center mt-4">
-            <a class="btn btn-primary" href="{% url 'logcarrinho.html' %}">Voltar para a página inicial</a>
+            <a class="btn btn-primary" href="{% url 'index' %}">Voltar para a página inicial</a>
         </div>
     </div>
 </main>

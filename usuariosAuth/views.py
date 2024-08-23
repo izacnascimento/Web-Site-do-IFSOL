@@ -110,34 +110,50 @@ def detalhar_pedido(request, carrinho_id):
 
 def editar_produto(request, produto_id):
     produto = get_object_or_404(Produtos, id=produto_id)
+    
     if request.method == 'POST':
-        form = Produtos(request.POST, request.FILES, instance=produto)
-        if form.is_valid():
-            form.save()
+        nome = request.POST.get('nomeproduto', produto.nome)
+        preco = request.POST.get('precoproduto', produto.preco)
+        unidade_de_medida = request.POST.get('unidadeproduto', produto.unidade_de_medida)
+        imagem = request.FILES.get('imagemproduto', produto.imagem)
+
+        if nome and preco and unidade_de_medida:
+            produto.nome = nome
+            produto.preco = preco
+            produto.unidade_de_medida = unidade_de_medida
+            if imagem:
+                produto.imagem = imagem
+            produto.save()
             messages.success(request, 'Produto atualizado com sucesso!')
-            return redirect('listar_produtos')
+            return redirect('pgcadastrar')
         else:
             messages.error(request, 'Erro ao atualizar o produto. Verifique os dados.')
-    else:
-        form = Produtos(instance=produto)
-    return render(request, 'editar_produto.html', {'form': form, 'produto': produto})
+
+    return render(request, 'usuarios/editar_produto.html', {'produto': produto})
 
 def excluir_produto(request, produto_id):
     produto = get_object_or_404(Produtos, id=produto_id)
+    
     if request.method == 'POST':
         produto.delete()
         messages.success(request, 'Produto excluído com sucesso!')
-        return redirect('listar_produtos')
-    return render(request, 'confirmar_exclusao.html', {'produto': produto})
+        return redirect('pgcadastrar')
+    
+    return render(request, 'usuarios/excluir_produto.html', {'produto': produto})
 
 def confirmar_compra(request, carrinho_id):
-    if request.user.is_superuser:
-        carrinho = get_object_or_404(Carrinho, pk=carrinho_id)
+    carrinho = get_object_or_404(Carrinho, id=carrinho_id)
+    
+    if request.method == 'POST':
+        # Confirma a compra
         carrinho.confirmado = True
         carrinho.save()
-        return redirect('pagina_de_confirmacao')
+        
+        # Adiciona uma mensagem de sucesso
+        messages.success(request, 'Compra confirmada com sucesso!')
+        
+        # Redireciona para a página de confirmação ou outra página desejada
+        return redirect('pgcadastrar')
     
-
-def pagina_de_erro(request, carrinho_id=None):
-    # lógica para a página de erro
-    return render(request, 'pagina_de_erro.html')
+    # Renderiza a página de confirmação para garantir que o usuário possa confirmar a ação
+    return render(request, 'usuarios/confirmar_compra.html', {'carrinho': carrinho})
