@@ -2,14 +2,17 @@
 {% block conteudo %}
 <main>
     <div class="container">
-        <h1 class="text-center mt-4">Confirmação de Compra</h1>
-        <div class="alert alert-success mt-4" role="alert">
-            Sua compra foi confirmada com sucesso!
+        <h1 class="text-center mt-4">Confirmar Compra</h1>
+        <div class="alert alert-warning mt-4" role="alert">
+            Tem certeza de que deseja confirmar esta compra?
         </div>
         <div class="text-center mt-4">
-            <a class="btn btn-primary" href="{% url 'index' %}">Voltar para a página inicial</a>
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Confirmar</button>
+                <a class="btn btn-danger" href="{% url 'index' %}">Cancelar</a>
+            </form>
         </div>
     </div>
 </main>
 {% endblock conteudo %}
-

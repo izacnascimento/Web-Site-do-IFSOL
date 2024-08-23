@@ -143,7 +143,7 @@ def excluir_produto(request, produto_id):
 
 def confirmar_compra(request, carrinho_id):
     carrinho = get_object_or_404(Carrinho, id=carrinho_id)
-    
+
     if request.method == 'POST':
         # Confirma a compra
         carrinho.confirmado = True
@@ -152,8 +152,8 @@ def confirmar_compra(request, carrinho_id):
         # Adiciona uma mensagem de sucesso
         messages.success(request, 'Compra confirmada com sucesso!')
         
-        # Redireciona para a página de confirmação ou outra página desejada
-        return redirect('pgcadastrar')
-    
-    # Renderiza a página de confirmação para garantir que o usuário possa confirmar a ação
+        # Redireciona para a página de controle ou a página de histórico
+        return redirect('controle')  # Ou redirecione para a página onde você exibe o histórico de pedidos
+
+    # Renderiza a página de confirmação de compra
     return render(request, 'usuarios/confirmar_compra.html', {'carrinho': carrinho})
