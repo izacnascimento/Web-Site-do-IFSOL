@@ -3,7 +3,6 @@
 {% block conteudo %}
 
 <body>
-
 <main>
     <div class="container">
         <!-- Navegação por Abas -->
@@ -44,9 +43,8 @@
                                     <div class="input-group">
                                         <input type="number" class="form-control text-center border-warning"
                                                id="quantidade-{{i.id}}" value="{{i.quantidade}}">
-                                        <a class="btn-apagar btn btn-outline-warning btn-sm ms-2" data-item-id="{{i.id}}"
-                                           href="/apagar_item_carrinho/{{i.id}}/">
-                                            <i class="fa-solid fa-trash"></i>
+                                        <a class="btn-apagar btn btn-outline-warning btn-sm ms-2" data-item-id="{{i.id}}" href="#">
+                                        <i class="fa-solid fa-cart-shopping"></i> 
                                         </a>
                                     </div>
                                 </div>
@@ -95,7 +93,6 @@
                 </table>
             </div>
         </div>
-
     </div>
 </main>
 
@@ -111,10 +108,10 @@
                 const itemParaRemover = this.closest('.item-carrinho');
 
                 fetch('/apagar_item_carrinho/' + itemId + '/', {
-                    method: 'GET',
+                    method: 'DELETE', // Método para exclusão
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')
+                        'X-CSRFToken': getCookie('csrftoken') // Adicione o token CSRF se necessário
                     }
                 })
                 .then(response => response.json())
@@ -171,15 +168,15 @@
             }
             return cookieValue;
         }
-    });
 
-    function atualizar_total() {
-        let total = 0;
-        $(".subtotal").each(function () {
-            total += parseFloat($(this).text().replace('R$', '').trim());
-        });
-        $('.total_carrinho').text(total.toFixed(2));
-    }
+        function atualizar_total() {
+            let total = 0;
+            $(".subtotal").each(function () {
+                total += parseFloat($(this).text().replace('R$', '').trim());
+            });
+            $('.total_carrinho').text(total.toFixed(2));
+        }
+    });
 </script>
 
 {% endblock conteudo %}

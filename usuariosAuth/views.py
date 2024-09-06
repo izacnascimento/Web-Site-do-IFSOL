@@ -92,7 +92,7 @@ def cadastrarprodutos(request):
             produto.save()
             data['msg'] = 'Produto cadastrado com Sucesso!'
             data['class'] = 'alert-success'
-            return render(request, 'usuarios/cadastrar_produtos.html', data)
+            return redirect('pgcadastrar')
         else:
             data['msg'] = 'Produto não cadastrado!'
             data['class'] = 'alert-danger'
@@ -101,7 +101,7 @@ def cadastrarprodutos(request):
 
 def pgcadastrar(request):
     listagem_de_produtos = Produtos.objects.all()
-    return render(request, 'usuarios/cadastrar_produtos.html', {'listagem_de_produtos': listagem_de_produtos})
+    return render(request, 'produtos.html', {'listagem_de_produtos': listagem_de_produtos})
 
 def detalhar_pedido(request, carrinho_id):
     carrinho = get_object_or_404(Carrinho, pk=carrinho_id)
@@ -163,3 +163,17 @@ def confirmar_compra(request, carrinho_id):
     # Renderiza a página de confirmação
     return render(request, 'usuarios/confirmar_compra.html', {'carrinho': carrinho})
 
+
+def excluir_pedido(request, pedido_id):
+    pedido = get_object_or_404(Carrinho, id=pedido_id)
+    
+    if request.method == 'POST':
+        pedido.delete()
+        messages.success(request, 'Pedido excluído com sucesso!')
+        return redirect('controle')
+    
+    return render(request, 'usuarios/excluir_pedido.html', {'pedido': pedido})
+
+def listar_produtos(request):
+    produtos = Produtos.objects.all()
+    return render(request, 'produtos.html', {'listagem_de_produtos': produtos})

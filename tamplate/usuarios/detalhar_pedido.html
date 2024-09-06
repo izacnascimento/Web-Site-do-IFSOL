@@ -2,34 +2,32 @@
 {% load static %}
 {% block conteudo %}
 
-
-<body>
-    <div class="container">
-        <h2 class="my-4">Detalhes do Pedido</h2>
-        <table class="table table-light table-striped">
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Valor</th>
-                    <th>Quantidade</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Aqui você pode adicionar linhas com informações de cada pedido -->
-                {% for item in carrinho.itens.all %}
-                <tr>
-                    <td>{{item.produto.nome}}</td>
-                    <td>{{item.produto.preco}}</td>
-                    <td>{{item.quantidade}}</td>
-                    <td>{{item.subtotal}}</td>
-                </tr>
-                {%endfor%}
-                <!-- Adicione mais linhas conforme necessário -->
-            </tbody>
-        </table>
+<div class="container mt-4">
+    <div class="bg-light p-4 rounded">
+        <h4 class="my-4 text-center">Detalhes do Pedido</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Produto</th>
+                        <th>Valor</th>
+                        <th>Quantidade</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in carrinho.itens.all %}
+                    <tr>
+                        <td>{{ item.produto.nome }}</td>
+                        <td>R$ {{ item.produto.preco }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>R$ {{ item.subtotal }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</body>
-
+</div>
 
 {% endblock conteudo %}

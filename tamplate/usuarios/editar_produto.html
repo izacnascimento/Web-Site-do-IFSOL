@@ -1,30 +1,38 @@
 {% extends 'layoutadmin.html' %}
 {% block conteudo %}
 <main>
-    <div class="container">
-        <h1 class="text-center mt-4">Editar Produto</h1>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="nomeproduto">Nome:</label>
-                <input type="text" class="form-control" name="nomeproduto" id="nomeproduto" value="{{ produto.nome }}" required>
+    <div class="custom-container mt-5 mb-4 d-flex justify-content-center">
+        <div class="row">
+            <!-- Formulário para editar um produto -->
+            <div class="col-md-12">
+                <section id="produto-form" class="bg-light p-4 border rounded-3 shadow-sm">
+                    <h4 class="text-center mb-4">Editar Produto</h4>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="nomeproduto" class="form-label">Nome</label>
+                            <input type="text" class="form-control" name="nomeproduto" id="nomeproduto" value="{{ produto.nome }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="precoproduto" class="form-label">Preço</label>
+                            <input type="number" class="form-control" name="precoproduto" id="precoproduto" step="0.01" value="{{ produto.preco }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="unidadeproduto" class="form-label">Unidade de Medida</label>
+                            <input type="text" class="form-control" name="unidadeproduto" id="unidadeproduto" value="{{ produto.unidade_de_medida }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imagemproduto" class="form-label">Imagem do Produto</label>
+                            <input type="file" class="form-control" name="imagemproduto" id="imagemproduto">
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-primary px-5 py-2">Salvar</button>
+                            <a href="{% url 'produtos' %}" class="btn btn-secondary px-5 py-2 ms-2">Cancelar</a>
+                        </div>
+                    </form>
+                </section>
             </div>
-            <div class="form-group">
-                <label for="precoproduto">Preço:</label>
-                <input type="number" step="0.01" class="form-control" name="precoproduto" id="precoproduto" value="{{ produto.preco }}" required>
-            </div>
-            <div class="form-group">
-                <label for="unidadeproduto">Unidade de Medida:</label>
-                <input type="text" class="form-control" name="unidadeproduto" id="unidadeproduto" value="{{ produto.unidade_de_medida }}" required>
-            </div>
-            <div class="form-group">
-                <label for="imagemproduto">Imagem:</label>
-                <input type="file" class="form-control" name="imagemproduto" id="imagemproduto">
-            </div>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-        </form>
-        <div class="text-center mt-4">
-            <a class="btn btn-primary" href="{% url 'index' %}">Voltar para a página inicial</a>
         </div>
     </div>
 </main>

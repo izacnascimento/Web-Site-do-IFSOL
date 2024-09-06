@@ -3,19 +3,15 @@
 {% block conteudo %}
 
 <body>
-    <div class="container mt-5 mb-4">
+    <div class="container mt-5 mb-4 d-flex justify-content-center">
         <div class="row">
             <!-- Formulário para cadastrar um novo produto -->
-            <div class="col-md-6">
-                <section id="cadastrar-produto" class="bg-light p-4 border rounded-3 shadow-sm">
+            <div class="col-md-12">
+                <section id="produto-form" class="bg-light p-4 border rounded-3 shadow-sm">
                     <h2 class="text-center mb-4">Cadastrar Produto</h2>
                     <form action="{% url 'cadastrarprodutos' %}" enctype="multipart/form-data" method="post">
                         {% csrf_token %}
-                        {% if msg %}
-                        <div class="alert {{ class }}">
-                            {{ msg }}
-                        </div>
-                        {% endif %}
+
                         <div class="mb-3">
                             <label for="nomeproduto" class="form-label">Nome</label>
                             <input type="text" class="form-control" name="nomeproduto" id="nomeproduto" required>
@@ -38,51 +34,8 @@
                     </form>
                 </section>
             </div>
-
-            <!-- Lista de Produtos -->
-            <div class="col-md-6">
-                <section id="produtos" class="bg-light p-4 border rounded-3 shadow-sm">
-                    <h2 class="text-center mb-4">Lista de Produtos</h2>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Preço</th>
-                                    <th>Unidade de Medida</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if listagem_de_produtos %}
-                                {% for produto in listagem_de_produtos %}
-                                <tr>
-                                    <td>{{ produto.nome }}</td>
-                                    <td>R$ {{ produto.preco }}</td>
-                                    <td>{{ produto.unidade_de_medida }}</td>
-                                    <td>
-                                        <a class="btn btn-warning btn-sm" href="{% url 'editar_produto' produto.id %}">Editar</a>
-                                        <a class="btn btn-danger btn-sm" href="{% url 'excluir_produto' produto.id %}">Excluir</a>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                {% else %}
-                                <tr>
-                                    <td colspan="4" class="text-center">Nenhum produto encontrado.</td>
-                                </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="d-flex justify-content-center mt-4">
-                        <a class="btn btn-success" href="{% url 'pgcadastrar' %}">Adicionar Novo Produto</a>
-                    </div>
-                </section>
-            </div>
         </div>
     </div>
 </body>
 
 {% endblock conteudo %}
-
-

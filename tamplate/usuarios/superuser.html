@@ -4,10 +4,9 @@
 
 <div class="container mt-4">
     <div class="row">
-        <!-- Seção de pedidos dos usuários (esquerda) -->
-        <div class="col-md-6 mb-4">
-            <h2 class="table-title">Pedidos dos Usuários</h2>
-            <div class="bg-light p-4 rounded">
+        <div class="col-md-12">
+            <div class="bg-light p-4 rounded mb-5">
+                <h3 class="table-title border-bottom pb-2 mb-3">Pedidos dos Usuários</h3>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-striped table-sm">
                         <thead class="thead-dark">
@@ -34,8 +33,9 @@
                                 </td>
                                 <td>
                                     <!-- Botões de ações -->
-                                    <a class="btn btn-success btn-sm" href="{% url 'confirmar_compra' i.id %}">Confirmar</a>
-                                    <a class="btn btn-warning btn-sm" href="{% url 'detalhar_pedido' i.id %}">Detalhar</a>
+                                    <button class="btn btn-success btn-sm" data-pedido-id="{{ i.id }}" onclick="showConfirmModal(this)">Confirmar</button>
+                                    <a class="btn btn-warning btn-sm" href="{% url 'detalhar_pedido' i.id %}">Detalher</a>
+                                    <button class="btn btn-danger btn-sm" data-pedido-id="{{ i.id }}" onclick="showDeleteModal(this)">Excluir</button>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -43,12 +43,9 @@
                     </table>
                 </div>
             </div>
-        </div>
 
-        <!-- Seção de histórico de pedidos (direita) -->
-        <div class="col-md-6 mb-4">
-            <h2 class="table-title">Histórico de Pedidos</h2>
             <div class="bg-light p-4 rounded">
+                <h3 class="table-title border-bottom pb-2 mb-3">Histórico de Pedidos</h3>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-striped table-sm">
                         <thead class="thead-dark">
@@ -56,6 +53,7 @@
                                 <th>ID do Pedido</th>
                                 <th>Total</th>
                                 <th>Confirmado</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,6 +68,9 @@
                                         <span class="badge bg-danger">Não</span>
                                     {% endif %}
                                 </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" data-pedido-id="{{ i.id }}" onclick="showDeleteModal(this)">Excluir</button>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -78,22 +79,68 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Seção de cadastro de produtos -->
-    <div class="container text-center mt-5">
-        <div class="row justify-content-between">
-            <div class="col-md-5 mb-4">
-                <h2>Cadastrar Produto</h2>
-                <div class="bg-success p-4 rounded d-flex justify-content-center align-items-center">
-                    <a class="nav-link link-light" href="{% url 'pgcadastrar' %}">
-                        <span style="font-size: 50px;"><i class="bi bi-plus-circle-fill"></i></span>
-                    </a>
-                </div>
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar Compra</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza de que deseja confirmar esta compra ou rejeitá-la?
+            </div>
+            <div class="modal-footer">
+                <form method="POST" id="confirmForm">
+                    {% csrf_token %}
+                    <button type="submit" name="confirmar" class="btn btn-success">Confirmar</button>
+                    <button type="submit" name="rejeitar" class="btn btn-danger">Cancelar</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-{% endblock conteudo %}
+<!-- Modal de Exclusão -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Excluir Pedido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza de que deseja excluir este pedido? Esta ação não pode ser desfeita.
+            </div>
+            <div class="modal-footer">
+                <form method="POST" id="deleteForm">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-o nome do arquivo é superuser.html
+<script>
+    function showConfirmModal(button) {
+        const pedidoId = button.getAttribute('data-pedido-id');
+        const form = document.getElementById('confirmForm');
+        form.action = "{% url 'confirmar_compra' 0 %}".slice(0, -2) + pedidoId + "/";
+        const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        confirmModal.show();
+    }
+
+    function showDeleteModal(button) {
+        const pedidoId = button.getAttribute('data-pedido-id');
+        const form = document.getElementById('deleteForm');
+        form.action = "{% url 'excluir_pedido' 0 %}".slice(0, -2) + pedidoId + "/";
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    }
+</script>
+
+{% endblock conteudo %}
