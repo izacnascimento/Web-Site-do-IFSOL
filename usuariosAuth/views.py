@@ -177,3 +177,28 @@ def excluir_pedido(request, pedido_id):
 def listar_produtos(request):
     produtos = Produtos.objects.all()
     return render(request, 'produtos.html', {'listagem_de_produtos': produtos})
+
+
+
+def editar_pedidos(request, produto_id):
+    produto = get_object_or_404(Produtos, id=produto_id)
+    
+    if request.method == 'POST':
+        nome = request.POST.get('nomeproduto', produto.nome)
+        preco = request.POST.get('precoproduto', produto.preco)
+        unidade_de_medida = request.POST.get('unidadeproduto', produto.unidade_de_medida)
+        imagem = request.FILES.get('imagemproduto', produto.imagem)
+
+        if nome and preco and unidade_de_medida:
+            produto.nome = nome
+            produto.preco = preco
+            produto.unidade_de_medida = unidade_de_medida
+            if imagem:
+                produto.imagem = imagem
+            produto.save()
+            messages.success(request, 'Produto atualizado com sucesso!')
+            return redirect('pgcadastrar')
+        else:
+            messages.error(request, 'Erro ao atualizar o produto. Verifique os dados.')
+
+    return render(request, 'usuarios/editar_pedidos.html', {'produto': produto})
