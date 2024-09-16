@@ -284,3 +284,19 @@ table.table .img-thumbnail {
     color: #000; /* Preto para o título do histórico de pedidos */
 }
 
+
+#produto-form {
+    border: 4px solid #eee4e4;  /* Borda cinza clara ao redor do formulário */
+    border-radius: 8px;         /* Bordas levemente arredondadas */
+    padding: 20px;              /* Espaçamento interno do formulário */
+    margin: 40px;               /* Espaçamento externo para evitar que o formulário fique muito próximo dos outros elementos */
+}
+
+#produto-form h4 {
+    text-align: center;         /* Centraliza o título */
+}
+
+#produto-form button {
+    border-radius: 5px;        /* Bordas arredondadas nos botões */
+    width: auto;
+}
