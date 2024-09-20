@@ -300,3 +300,10 @@ table.table .img-thumbnail {
     border-radius: 5px;        /* Bordas arredondadas nos botões */
     width: auto;
 }
+
+
+.contact-box i {
+    color: #D14836; /* Cor vermelha do Gmail */
+    font-size: 24px; /* Ajuste o tamanho do ícone se necessário */
+}
+
