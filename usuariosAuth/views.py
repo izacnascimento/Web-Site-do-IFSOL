@@ -5,6 +5,7 @@ from django.contrib import auth
 from info.models import Usuario, Produtos, Carrinho
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
+from info.models import Usuario
 
 def cadastro(request):
     if request.method == 'POST':
@@ -36,6 +37,7 @@ def cadastro(request):
     else:
         return render(request, 'usuarios/cadastro.html')
 
+@login_required
 def login(request):
     if request.method == "POST":
         email = request.POST['inputEmail4']
@@ -177,7 +179,4 @@ def excluir_pedido(request, pedido_id):
 def listar_produtos(request):
     produtos = Produtos.objects.all()
     return render(request, 'produtos.html', {'listagem_de_produtos': produtos})
-
-
-
 

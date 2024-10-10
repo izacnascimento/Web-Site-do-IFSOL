@@ -47,38 +47,43 @@ def logcarrinho (request):
     else:
         return render (request, 'index.html')
 
-def logperfil (request):
-    
+@login_required
+def logperfil(request):
     if request.user.is_authenticated:
-        pessoa = Usuario.objects.get(chave=request.user)
-        
-        if request.POST:
-            telefone = request.POST['inputTelefone']
-            endereço = request.POST['inputAddress']
-            numero_casa = request.POST['inputnumero']
-            complemento = request.POST['inputAddress2']
-            cep = request.POST['inputZip']
-            cidade = request.POST['inputCity']
-            estado = request.POST['inputState']
-            
-            
-            pessoa.telefone = telefone
-            pessoa.endereco = endereço
-            pessoa.numero_casa = numero_casa
-            pessoa.complemento = complemento
-            pessoa.cep = cep
-            pessoa.cidade = cidade
-            pessoa.estado = estado
-            request.user.save()
-            pessoa.save()
-            
-            return redirect ('index')
+        # Tente buscar o usuário com o "get_object_or_404"
+        try:
+            pessoa = Usuario.objects.get(chave=request.user)
+
+            if request.method == 'POST':
+                telefone = request.POST['inputTelefone']
+                endereço = request.POST['inputAddress']
+                numero_casa = request.POST['inputnumero']
+                complemento = request.POST['inputAddress2']
+                cep = request.POST['inputZip']
+                cidade = request.POST['inputCity']
+                estado = request.POST['inputState']
+
+                pessoa.telefone = telefone
+                pessoa.endereco = endereço
+                pessoa.numero_casa = numero_casa
+                pessoa.complemento = complemento
+                pessoa.cep = cep
+                pessoa.cidade = cidade
+                pessoa.estado = estado
                 
-        else:
-            return render (request, 'usuarios/logperfil.html')
-        
+                pessoa.save()  # Salvar as alterações feitas
+                return redirect('index')
+
+            else:
+                return render(request, 'usuarios/logperfil.html', {'pessoa': pessoa})
+
+        except Usuario.DoesNotExist:
+            # Aqui você pode redirecionar para uma página de erro ou criar o usuário
+            # Caso deseje redirecionar para uma página de registro, você pode fazer assim:
+            return redirect('login')  # Substitua pelo nome da view de registro
+    
     else:
-        return render (request, 'index.html')
+        return redirect('index')  # Redirecionar não autenticados para a página inicial
 
 def addcarrinho (request, id):
     produto = Produtos.objects.get(id=id)
@@ -170,3 +175,5 @@ def confirmar_compra(request, carrinho_id):
 # def pedidos_confirmados(request):
 #     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
 #     return render(request, 'usuarios/superuser.html', {'carrinhos_confirmados': carrinhos_confirmados})
+
+
