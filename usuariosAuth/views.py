@@ -37,7 +37,6 @@ def cadastro(request):
     else:
         return render(request, 'usuarios/cadastro.html')
 
-@login_required
 def login(request):
     if request.method == "POST":
         email = request.POST['inputEmail4']
@@ -79,6 +78,7 @@ def AlterarSenha(request):
     else:
         return render(request, 'index.html')
 
+@login_required
 def cadastrarprodutos(request):
     if request.method == 'POST':
         nome = request.POST.get('nomeproduto')
@@ -110,6 +110,7 @@ def detalhar_pedido(request, carrinho_id):
     itens_carrinho = carrinho.itens.all()
     return render(request, 'usuarios/detalhar_pedido.html', {'carrinho': carrinho, 'itens_carrinho': itens_carrinho})
 
+@login_required
 def editar_produto(request, produto_id):
     produto = get_object_or_404(Produtos, id=produto_id)
     
@@ -133,6 +134,7 @@ def editar_produto(request, produto_id):
 
     return render(request, 'usuarios/editar_produto.html', {'produto': produto})
 
+@login_required
 def excluir_produto(request, produto_id):
     produto = get_object_or_404(Produtos, id=produto_id)
     
@@ -165,7 +167,7 @@ def confirmar_compra(request, carrinho_id):
     # Renderiza a página de confirmação
     return render(request, 'usuarios/confirmar_compra.html', {'carrinho': carrinho})
 
-
+@login_required
 def excluir_pedido(request, pedido_id):
     pedido = get_object_or_404(Carrinho, id=pedido_id)
     
@@ -177,6 +179,10 @@ def excluir_pedido(request, pedido_id):
     return render(request, 'usuarios/excluir_pedido.html', {'pedido': pedido})
 
 def listar_produtos(request):
-    produtos = Produtos.objects.all()
-    return render(request, 'produtos.html', {'listagem_de_produtos': produtos})
+    if request.user.is_authenticated:
+        produtos = Produtos.objects.all()
+        return render(request, 'produtos.html', {'listagem_de_produtos': produtos})
+    else:
+        messages.error(request, 'Você precisa estar logado para ver os produtos.')
+        return redirect('login')
 

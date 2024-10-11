@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.http import JsonResponse
 from rest_framework import status
+from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login
 
 def superuser (request):
     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
@@ -171,7 +173,29 @@ def confirmar_compra(request, carrinho_id):
     else:
         # Se o usuário não for um superusuário, talvez você queira redirecioná-lo para outra página ou exibir uma mensagem de erro
         return redirect('controle')
-    
+
+@login_required
+def login(request):
+    if request.method == "POST":
+        email = request.POST['inputEmail4']
+        senha = request.POST['inputPassword4']
+        if User.objects.filter(email=email).exists():
+            nome = User.objects.filter(email=email).values_list('username', flat=True).get()
+            user = authenticate(request, username=nome, password=senha)
+            if user is not None:
+                auth_login(request, user)
+                return redirect('index')
+            else:
+                messages.error(request, "Senha inválida!")
+        else:
+            messages.error(request, "Email não encontrado!")
+        return redirect('login')
+    return render(request, 'usuarios/login.html')
+
+def logout(request):
+    auth.logout(request)
+    return render(request, 'index.html')
+
 # def pedidos_confirmados(request):
 #     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
 #     return render(request, 'usuarios/superuser.html', {'carrinhos_confirmados': carrinhos_confirmados})
