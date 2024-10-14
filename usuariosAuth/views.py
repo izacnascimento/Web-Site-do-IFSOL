@@ -77,8 +77,7 @@ def AlterarSenha(request):
             return render(request, 'usuarios/alterar_senha.html')
     else:
         return render(request, 'index.html')
-
-@login_required
+    
 def cadastrarprodutos(request):
     if request.method == 'POST':
         nome = request.POST.get('nomeproduto')
@@ -167,7 +166,6 @@ def confirmar_compra(request, carrinho_id):
     # Renderiza a página de confirmação
     return render(request, 'usuarios/confirmar_compra.html', {'carrinho': carrinho})
 
-@login_required
 def excluir_pedido(request, pedido_id):
     pedido = get_object_or_404(Carrinho, id=pedido_id)
     

@@ -5,12 +5,7 @@ from .models import Produtos
 from .models import Usuario
 from .models import Carrinho
 from .models import ItemCarrinho
-from django.contrib.auth.models import User
-from django.contrib import auth
 from django.http import JsonResponse
-from rest_framework import status
-from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
 
 def superuser (request):
     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
@@ -87,6 +82,8 @@ def logperfil(request):
     else:
         return redirect('index')  # Redirecionar não autenticados para a página inicial
 
+
+@login_required
 def addcarrinho (request, id):
     produto = Produtos.objects.get(id=id)
     carrinho =  request.user.carrinhos.filter(ativo = True).last()
@@ -150,11 +147,35 @@ def exclui_produto(request, item_id):
     return redirect('pgcadastrar') 
 
 def atualizar_subtotal(request, item_id):
+    # Obtém o item do carrinho usando o item_id
     item = ItemCarrinho.objects.get(pk=item_id)
-    item.quantidade = quantidade
-    subtotal = item.produto.preco * quantidade
-        
-    return subtotal
+
+    # Recupera a quantidade da requisição (supondo que ela seja enviada via GET ou POST)
+    quantidade_str = request.GET.get('quantidade') or request.POST.get('quantidade')
+
+    # Verifica se a quantidade foi fornecida
+    if quantidade_str:
+        try:
+            # Converte a quantidade para inteiro
+            quantidade = int(quantidade_str)
+
+            # Verifica se a quantidade é positiva
+            if quantidade >= 0:
+                # Atualiza a quantidade e o subtotal do item
+                item.quantidade = quantidade
+                item.subtotal = item.produto.preco * quantidade
+                item.save()  # Salva as alterações no banco de dados
+                
+                # Retorna o subtotal diretamente
+                subtotal = item.subtotal
+                return subtotal
+            else:
+                return JsonResponse({'error': 'A quantidade deve ser um número positivo.'}, status=400)
+        except ValueError:
+            return JsonResponse({'error': 'Valor inválido para quantidade.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Quantidade não fornecida.'}, status=400)
+
 
 def finalizar_carrinho (request, id):
     carrinho = Carrinho.objects.get(id=id)
@@ -165,36 +186,19 @@ def finalizar_carrinho (request, id):
 
 @login_required
 def confirmar_compra(request, carrinho_id):
-    if request.user.is_superuser:
-        carrinho = get_object_or_404(Carrinho, pk=carrinho_id)
+    if request.user.is_superuser:  # Verifica se o usuário é superusuário
+        # Obtém o carrinho ativo ou retorna 404 se não existir
+        carrinho = get_object_or_404(Carrinho, pk=carrinho_id, ativo=True)
+        
+        # Marcar o carrinho como confirmado e inativo
         carrinho.confirmado = True
-        carrinho.save()
-        return redirect('controle')  # Redirecione para a página de confirmação ou outra página desejada após a confirmação
+        carrinho.ativo = False  # Torna o carrinho inativo após a confirmação
+        carrinho.save()  # Salva as alterações
+
+        return redirect('controle')  # Redireciona para a página de controle após a confirmação
     else:
-        # Se o usuário não for um superusuário, talvez você queira redirecioná-lo para outra página ou exibir uma mensagem de erro
-        return redirect('controle')
+        return redirect('controle')  # Redireciona se o usuário não for superusuário
 
-@login_required
-def login(request):
-    if request.method == "POST":
-        email = request.POST['inputEmail4']
-        senha = request.POST['inputPassword4']
-        if User.objects.filter(email=email).exists():
-            nome = User.objects.filter(email=email).values_list('username', flat=True).get()
-            user = authenticate(request, username=nome, password=senha)
-            if user is not None:
-                auth_login(request, user)
-                return redirect('index')
-            else:
-                messages.error(request, "Senha inválida!")
-        else:
-            messages.error(request, "Email não encontrado!")
-        return redirect('login')
-    return render(request, 'usuarios/login.html')
-
-def logout(request):
-    auth.logout(request)
-    return render(request, 'index.html')
 
 # def pedidos_confirmados(request):
 #     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)

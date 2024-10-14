@@ -4,13 +4,13 @@
 
 <body>
         
-    <div class="container mt-5 mb-4"> <!-- Adiciona uma margem superior e inferior ao contêiner -->
+    <div class="container mt-4 mb-4"> <!-- Reduz a margem superior -->
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6"> <!-- Ajusta a largura das colunas -->
-                <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light shadow" action="{% url 'cadastro' %}" method="post" name="formcadastro" id="formcadastro">
+            <div class="col-12 col-md-8 col-lg-5"> <!-- Ajusta a largura das colunas -->
+                <form class="needs-validation p-3 p-md-4 border rounded-3 bg-light shadow" action="{% url 'cadastro' %}" method="post" name="formcadastro" id="formcadastro">
                     {% csrf_token %}
                     <div id="divCadastro">
-                        <h2 class="text-center mb-4" style="color: #849da3;">Cadastro</h2> <!-- Ajusta a margem inferior do título -->
+                        <h2 class="text-center mb-3" style="color: #849da3;">Cadastro</h2> <!-- Ajusta a margem inferior do título -->
                     </div>
                     {% if msg %}
                         <div class="alert {{class}}">
@@ -20,11 +20,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputName">Nome</label>
-                            <input type="text" name="inputName" id="inputName" class="form-control" placeholder="Digite o seu primeiro Nome" required>
+                            <input type="text" name="inputName" id="inputName" class="form-control" placeholder="Primeiro Nome" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputSurname">Sobrenome</label>
-                            <input type="text" class="form-control" name="inputSurname" id="inputSurname" placeholder="Digite o seu Sobrenome" required>
+                            <input type="text" class="form-control" name="inputSurname" id="inputSurname" placeholder="Sobrenome" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputEmail4">Email</label>
@@ -118,7 +118,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center mt-4">
+                    <div class="d-flex justify-content-center mt-3"> <!-- Ajusta a margem superior do botão -->
                         <input type="submit" class="btn btn-success px-5 py-2" value="Cadastrar-se" style="border-radius: 50px;">
                     </div>
                 </form>
@@ -129,3 +129,4 @@
 </body>
 
 {% endblock conteudo %}
+
