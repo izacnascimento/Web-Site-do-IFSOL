@@ -183,4 +183,3 @@ def listar_produtos(request):
     else:
         messages.error(request, 'Você precisa estar logado para ver os produtos.')
         return redirect('login')
-

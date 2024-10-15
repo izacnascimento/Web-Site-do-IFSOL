@@ -41,18 +41,20 @@
                                 </div>
                                 <div class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-4 offset-md-8 col-lg-3 offset-lg-0 col-xl-2">
                                     <div class="input-group">
-                                        <input type="number" class="form-control text-center border-warning"
-                                               id="quantidade-{{i.id}}" value="{{i.quantidade}}">
+                                        <input type="number" class="form-control text-center border-warning" id="quantidade-{{i.id}}" value="{{i.quantidade}}">
                                         <a class="btn-apagar btn btn-outline-warning btn-sm ms-2" data-item-id="{{i.id}}" href="#">
-                                        <i class="fa-solid fa-cart-shopping"></i> 
+                                            <i class="fa-solid fa-cart-shopping"></i>
                                         </a>
+                                    </div>
+                                    <!-- Barra para excluir produto -->
+                                    <div class="mt-2">
+                                        <button class="btn-excluir btn btn-danger btn-sm" data-item-id="{{i.id}}">Excluir Produto</button>
                                     </div>
                                 </div>
                                 <div class="col-12 text-end">
                                     <small class="text-secondary">Valor {{i.produto.unidade_de_medida}}: R$ {{i.produto.preco}}</small>
                                     <br>
-                                    <span class="text-dark">Subtotal do Item: R$ <span class="subtotal"
-                                                                                  id="{{i.id}}">{{i.subtotal}}</span></span>
+                                    <span class="text-dark">Subtotal do Item: R$ <span class="subtotal" id="{{i.id}}">{{i.subtotal}}</span></span>
                                 </div>
                             </div>
                         </li>
@@ -96,87 +98,70 @@
     </div>
 </main>
 
+<!-- Script para manipular a exclusão e atualização de itens do carrinho -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const botoesApagar = document.querySelectorAll('.btn-apagar');
+    const botoesExcluir = document.querySelectorAll('.btn-excluir');
 
-        botoesApagar.forEach(function (botao) {
-            botao.addEventListener('click', function (event) {
-                event.preventDefault(); // Evita o comportamento padrão do link
-                const itemId = this.getAttribute('data-item-id');
-                const itemParaRemover = this.closest('.item-carrinho');
+    // Função para excluir produto do carrinho
+    botoesExcluir.forEach(function (botao) {
+        botao.addEventListener('click', function (event) {
+            event.preventDefault();
+            const itemId = this.getAttribute('data-item-id');
+            const itemParaRemover = this.closest('.item-carrinho');
 
-                fetch('/apagar_item_carrinho/' + itemId + '/', {
-                    method: 'DELETE', // Método para exclusão
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken') // Adicione o token CSRF se necessário
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.message);
-                    if (itemParaRemover) {
-                        itemParaRemover.remove();
-                        atualizar_total();
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao apagar o item:', error);
-                });
+            // Faz a requisição DELETE para apagar o item
+            fetch(`/apagar_item_carrinho/${itemId}/`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')  // CSRF token
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    itemParaRemover.remove();  // Remove o item da interface
+                    atualizar_total();  // Atualiza o total do carrinho
+                } else {
+                    alert('Erro ao excluir o produto');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao excluir o produto:', error);
             });
         });
+    });
 
-        const inputsQuantidade = document.querySelectorAll('.form-control');
-
-        inputsQuantidade.forEach(function (input) {
-            input.addEventListener('change', function (event) {
-                const itemId = this.id.split('-')[1];
-                const novaQuantidade = this.value;
-
-                fetch('/atualizar_quantidade/' + itemId + '/?nova_quantidade=' + novaQuantidade, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.message);
-                    document.getElementById(itemId).innerHTML = data.subtotal;
-                    atualizar_total();
-                })
-                .catch(error => {
-                    console.error('Erro ao atualizar a quantidade:', error);
-                });
-            });
-        });
-
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.startsWith(name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
+    // Função para obter o CSRF Token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
                 }
             }
-            return cookieValue;
         }
+        return cookieValue;
+    }
 
-        function atualizar_total() {
-            let total = 0;
-            $(".subtotal").each(function () {
-                total += parseFloat($(this).text().replace('R$', '').trim());
-            });
-            $('.total_carrinho').text(total.toFixed(2));
-        }
-    });
+    // Função para atualizar o valor total do carrinho
+    function atualizar_total() {
+        let total = 0;
+        document.querySelectorAll(".subtotal").forEach(function (subtotalElem) {
+            total += parseFloat(subtotalElem.textContent.replace('R$', '').trim());
+        });
+        document.querySelector('.total_carrinho').textContent = total.toFixed(2);
+    }
+});
+
 </script>
 
 {% endblock conteudo %}
+
+

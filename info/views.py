@@ -200,8 +200,14 @@ def confirmar_compra(request, carrinho_id):
         return redirect('controle')  # Redireciona se o usuário não for superusuário
 
 
-# def pedidos_confirmados(request):
-#     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
-#     return render(request, 'usuarios/superuser.html', {'carrinhos_confirmados': carrinhos_confirmados})
+@login_required
+def excluir_item_carrinho(request, carrinho_id, produto_id):
+    carrinho = get_object_or_404(Carrinho, id=carrinho_id)
+    produto = get_object_or_404(Produtos, id=produto_id)
 
+    if request.method == 'POST':
+        item = carrinho.itens.filter(produto=produto).first()
+        if item:
+            item.delete()
+    return redirect('logcarrinho')
 
