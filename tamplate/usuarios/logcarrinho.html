@@ -104,7 +104,6 @@
     document.addEventListener('DOMContentLoaded', function () {
     const botoesExcluir = document.querySelectorAll('.btn-excluir');
 
-    // Função para excluir produto do carrinho
     botoesExcluir.forEach(function (botao) {
         botao.addEventListener('click', function (event) {
             event.preventDefault();
@@ -123,9 +122,9 @@
             .then(data => {
                 if (data.success) {
                     itemParaRemover.remove();  // Remove o item da interface
-                    atualizar_total();  // Atualiza o total do carrinho
+                    atualizar_total();         // Atualiza o total do carrinho
                 } else {
-                    alert('Erro ao excluir o produto');
+                    alert('Erro ao excluir o produto: ' + (data.error || 'Erro desconhecido'));
                 }
             })
             .catch(error => {
@@ -134,7 +133,7 @@
         });
     });
 
-    // Função para obter o CSRF Token
+    // Função para obter o CSRF Token permanece a mesma
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -150,7 +149,7 @@
         return cookieValue;
     }
 
-    // Função para atualizar o valor total do carrinho
+    // Função para atualizar o valor total do carrinho permanece a mesma
     function atualizar_total() {
         let total = 0;
         document.querySelectorAll(".subtotal").forEach(function (subtotalElem) {

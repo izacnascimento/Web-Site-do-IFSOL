@@ -131,13 +131,14 @@ def atualizar_quantidade(request, item_id):
     return JsonResponse({}, status=400)
 
 def apagar_item_carrinho(request, item_id):
-    if request.method == 'GET':
-        print("id", item_id)
+    if request.method == 'DELETE':
         item = ItemCarrinho.objects.filter(pk=item_id).first()
-        if item: 
+        if item:
             item.delete()
-       
-    return redirect("/logcarrinho")
+            return JsonResponse({'success': True})  # Retorna um JSON de sucesso
+        return JsonResponse({'success': False, 'error': 'Item não encontrado.'}, status=404)
+
+    return JsonResponse({'success': False, 'error': 'Método não permitido.'}, status=405)
 
 def exclui_produto(request, item_id):
     if request.method == 'GET':
