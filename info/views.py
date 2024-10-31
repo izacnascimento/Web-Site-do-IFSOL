@@ -7,10 +7,20 @@ from .models import Carrinho
 from .models import ItemCarrinho
 from django.http import JsonResponse
 
-def superuser (request):
+
+@login_required
+def superuser(request):
+    # Verifica se o usuário logado é superusuário
+    if not request.user.is_superuser:
+        return redirect('index')  # Redireciona para a página inicial se não for superusuário
+    
+    # Consulta os carrinhos confirmados e não confirmados
     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
-    lista = Carrinho.objects.filter(ativo=False,confirmado=False)
-    return render (request, 'usuarios/superuser.html', {'lista':lista,'carrinhos_confirmados': carrinhos_confirmados})
+    lista = Carrinho.objects.filter(ativo=False, confirmado=False)
+    
+    # Renderiza a página da cooperativa se o usuário for superusuário
+    return render(request, 'usuarios/superuser.html', {'lista': lista, 'carrinhos_confirmados': carrinhos_confirmados})
+
 
 def index (request):
     return render (request, 'index.html')

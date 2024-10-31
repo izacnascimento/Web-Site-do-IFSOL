@@ -2,6 +2,11 @@
 {% load static %}
 {% block conteudo %} 
 
+<style>
+    body {
+            background-color: #cfe2d3; /* Cor de fundo clara (pode ser alterada conforme desejado) */
+        }
+</style>
 <body>
         
     <div class="container mt-4 mb-4"> <!-- Reduz a margem superior -->
@@ -10,7 +15,7 @@
                 <form class="needs-validation p-3 p-md-4 border rounded-3 bg-light shadow" action="{% url 'cadastro' %}" method="post" name="formcadastro" id="formcadastro">
                     {% csrf_token %}
                     <div id="divCadastro">
-                        <h2 class="text-center mb-3" style="color: #849da3;">Cadastro</h2> <!-- Ajusta a margem inferior do título -->
+                        <h2 class="text-center mb-3" style="color: #849da3;">Cadastro</h2>
                     </div>
                     {% if msg %}
                         <div class="alert {{class}}">
