@@ -197,18 +197,18 @@ def finalizar_carrinho (request, id):
 
 @login_required
 def confirmar_compra(request, carrinho_id):
-    if request.user.is_superuser:  # Verifica se o usuário é superusuário
-        # Obtém o carrinho ativo ou retorna 404 se não existir
+    if request.user.is_superuser: 
+     
         carrinho = get_object_or_404(Carrinho, pk=carrinho_id, ativo=True)
         
-        # Marcar o carrinho como confirmado e inativo
+   
         carrinho.confirmado = True
-        carrinho.ativo = False  # Torna o carrinho inativo após a confirmação
-        carrinho.save()  # Salva as alterações
+        carrinho.ativo = False  
+        carrinho.save()  
 
-        return redirect('controle')  # Redireciona para a página de controle após a confirmação
+        return redirect('controle')  
     else:
-        return redirect('controle')  # Redireciona se o usuário não for superusuário
+        return redirect('controle')  
 
 
 @login_required
