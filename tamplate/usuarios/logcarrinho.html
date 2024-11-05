@@ -4,14 +4,13 @@
 
 <style>
     body {
-            background-color: #cfe2d3; /* Cor de fundo clara (pode ser alterada conforme desejado) */
+            background-color: #cfe2d3;
         }
 </style>
 
 <body>
 <main>
     <div class="container">
-        <!-- Navegação por Abas -->
         <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#carrinho"
@@ -23,9 +22,8 @@
             </li>
         </ul>
 
-        <!-- Conteúdo das Abas -->
         <div class="tab-content mt-3">
-            <!-- Aba Carrinho -->
+        
             <div class="tab-pane fade show active bg-light p-3" id="carrinho" role="tabpanel">
                 <h3 class="text-center mb-4">Carrinho de Compras</h3>
                 <hr>
@@ -74,7 +72,6 @@
                 </ul>
             </div>
 
-            <!-- Aba Histórico -->
             <div class="tab-pane fade bg-light p-3" id="historico" role="tabpanel" aria-labelledby="profile-tab">
                 <h3 class="text-center mb-4">Histórico de Pedidos</h3>
                 <table class="table table-light table-striped">
@@ -100,7 +97,7 @@
     </div>
 </main>
 
-<!-- Script para manipular a exclusão e atualização de itens do carrinho -->
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -112,19 +109,19 @@
                 const itemId = this.getAttribute('data-item-id');
                 const itemParaRemover = this.closest('.item-carrinho');
 
-                // Faz a requisição DELETE para apagar o item
+          
                 fetch(`/apagar_item_carrinho/${itemId}/`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')  // CSRF token
+                        'X-CSRFToken': getCookie('csrftoken')  
                     }
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        itemParaRemover.remove();  // Remove o item da interface
-                        atualizar_total();         // Atualiza o total do carrinho
+                        itemParaRemover.remove();  
+                        atualizar_total();         
                     } else {
                         alert('Erro ao excluir o produto: ' + (data.error || 'Erro desconhecido'));
                     }
@@ -135,7 +132,7 @@
             });
         });
 
-        // Função para obter o CSRF Token
+        
         function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -151,7 +148,7 @@
             return cookieValue;
         }
 
-        // Função para atualizar o valor total do carrinho
+        
         function atualizar_total() {
             let total = 0;
             document.querySelectorAll(".subtotal").forEach(function (subtotalElem) {

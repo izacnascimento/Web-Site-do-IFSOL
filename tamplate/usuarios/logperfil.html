@@ -4,20 +4,19 @@
 
 <style>
     body {
-            background-color: #cfe2d3; /* Cor de fundo clara (pode ser alterada conforme desejado) */
+            background-color: #cfe2d3; 
         }
 </style>
 
 <body>
        
-    <div class="container mt-5 mb-4"> <!-- Adiciona uma margem superior e inferior ao contêiner -->
+    <div class="container mt-5 mb-4"> 
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6"> <!-- Ajusta a largura das colunas -->
+            <div class="col-12 col-md-8 col-lg-6"> 
                 <form class="needs-validation p-4 p-md-5 border rounded-3 bg-light shadow" action="{% url 'cadastro' %}" method="post" name="formcadastro" id="formcadastro">
                     {% csrf_token %}
                     <div id="divCadastro">
-                        <h2 class="text-center mb-4" style="color: #849da3;">Cadastro</h2> <!-- Ajusta a margem inferior do título -->
-                    </div>
+                        <h2 class="text-center mb-4" style="color: #849da3;">Cadastro</h2> 
                     {% if msg %}
                         <div class="alert {{class}}">
                             {{msg}}

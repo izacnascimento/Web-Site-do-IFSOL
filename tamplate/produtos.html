@@ -4,7 +4,7 @@
 
 <style>
     body {
-            background-color: #cfe2d3; /* Cor de fundo clara (pode ser alterada conforme desejado) */
+            background-color: #cfe2d3; 
         }
 </style>
 
@@ -77,7 +77,7 @@
     </main>
 
 
-    <!-- Modal de Exclusão -->
+   
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -124,8 +124,8 @@
                     })
                     .then(response => {
                         if (response.ok) {
-                            // Atualiza a página ou mostra uma mensagem de sucesso
-                            window.location.href = "{% url 'logcarrinho' %}";  // Redireciona para a página de logcarrinho
+                          
+                            window.location.href = "{% url 'logcarrinho' %}";  
                         } else {
                             console.error('Erro na requisição:', response.status);
                         }

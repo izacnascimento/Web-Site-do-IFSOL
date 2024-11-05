@@ -32,7 +32,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <!-- Botões de ações -->
+                                  
                                     <button class="btn btn-success btn-sm" data-pedido-id="{{ i.id }}" onclick="showConfirmModal(this)">Confirmar</button>
                                     <a class="btn btn-warning btn-sm" href="{% url 'detalhar_pedido' i.id %}">Detalher</a>
                                     <button class="btn btn-danger btn-sm" data-pedido-id="{{ i.id }}" onclick="showDeleteModal(this)">Excluir</button>
@@ -81,7 +81,7 @@
     </div>
 </div>
 
-<!-- Modal de Confirmação -->
+
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -103,7 +103,7 @@
     </div>
 </div>
 
-<!-- Modal de Exclusão -->
+
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
