@@ -34,7 +34,7 @@
 
 <style>
     body {
-            background-color: #cfe2d3; /* Cor de fundo clara (pode ser alterada conforme desejado) */
+            background-color: #cfe2d3; 
         }
 </style>
 
@@ -70,6 +70,12 @@
                                 </a>
                             </li>
                             {% endif %}
+                            <li class="nav-item custom-icon-item">
+                                <a class="nav-link link-light custom-icons" href="{% url 'index' %}">
+                                    <span><i class="bi bi-arrow-left"></i></span>
+                                    <span class="icon-text">Voltar</span>
+                                </a>
+                            </li>
                             <li class="nav-item custom-icon-item">
                                 <a class="nav-link link-light custom-icons" href="{% url 'logout' %}">
                                     <span><i class="bi bi-box-arrow-right"></i></span>

@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -109,7 +109,6 @@ def detalhar_pedido(request, carrinho_id):
     return render(request, 'usuarios/detalhar_pedido.html', {'carrinho': carrinho, 'itens_carrinho': itens_carrinho})
 
 @login_required
-@user_passes_test
 def editar_produto(request, produto_id):
     produto = get_object_or_404(Produtos, id=produto_id)
     

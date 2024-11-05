@@ -54,11 +54,13 @@
                                         <td>R$ {{ produto.preco }}</td>
                                         <td>{{ produto.unidade_de_medida }}</td>
                                         <td>
-                                            {% if user.is_authenticated %}
+                                        {% if user.is_authenticated %}
                                             <a id="add-product" href="addcarrinho/{{ produto.id }}" class="btn btn-success ajax-link">Adicionar</a>
+                                            {% if user.is_authenticated and user.is_superuser %}
                                                 <a href="{% url 'editar_produto' produto.id %}" class="btn btn-info">Editar</a>
                                                 <button class="btn btn-danger" onclick="showDeleteModal('{{ produto.id }}')">Excluir</button>
                                             {% endif %}
+                                        {% endif %}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -135,4 +137,5 @@
     </script>
 
 {% endblock conteudo %}
+
 

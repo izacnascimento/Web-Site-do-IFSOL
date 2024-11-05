@@ -1,4 +1,3 @@
-/* Slider */
 .container-fluid{
 padding: 0%;
 }
@@ -12,7 +11,7 @@ background-color: #3b5c2c;
 }
 
 #parceiros {
-    /* background: #ced4da; */
+
     color: rgb(12, 12, 12);
     border-top: 5px solid rgba(11, 11, 12, 0.1);
     padding-top: 30px;
@@ -20,7 +19,7 @@ background-color: #3b5c2c;
     padding-bottom: 100px;
 }
 
-/* Footer */
+
 
 #contato {
     text-align: center;
@@ -161,54 +160,53 @@ small.limitadorDeLinha {
 }
 
 .container4 {
-background-color: #f0f0f0; /* Cor de fundo do rodapé */
-color: #333; /* Cor do texto */
+background-color: #f0f0f0; 
+color: #333; 
 padding: 30px;
 }
 
 .social-icons a {
-color: #333; /* Cor dos ícones das redes sociais */
+color: #333; 
 }
 
 .social-icons a:hover {
-color: #007bff; /* Cor dos ícones ao passar o mouse */
+color: #007bff; 
 }
 
 .table-primary1 {
-    background-color: #70a05a; /* verde claro */
+    background-color: #70a05a; 
     color: #121213(113, 122, 119);
 }
 
 .table-light {
-    background-color: #9a9e98; /* cinza claro */
+    background-color: #9a9e98; 
 }
 
 .table-hover tbody tr:hover {
-    background-color: #9a9e98; /* Cinza claro */
+    background-color: #9a9e98; 
 }
 
 
-/* Estilo para a tabela */
+
 table.table {
     border-collapse: collapse;
     width: 100%;
     background-color: #f8f9fa;
 }
 
-/* Estilo para o cabeçalho completo (toda a linha superior) */
+
 .thead{
-    background-color: #70a05a; /* Cor verde clara */
-    border: 1px solid #000000; /* Borda preta */
+    background-color: #70a05a; 
+    border: 1px solid #000000; 
     color: black;
     text-align: left;
 }
 
-/* Estilo para as células */
 table.table th, table.table th {
     padding: 8px;
 }
 
-/* Cor alternada nas linhas */
+
 .table{
     background-color: #e9ecef;
 }
@@ -217,13 +215,13 @@ table.table th, table.table th {
     background-color: #ffffff;
 }
 
-/* Estilo da imagem em miniatura */
+
 table.table .img-thumbnail {
     width: 100px;
     height: auto;
 }
 
-/* Estilo do botão */
+
 .btn-success1 {
     background-color: #5f925f;
     border-color: #3a8d4c;
@@ -242,17 +240,17 @@ table.table .img-thumbnail {
 
 
 .form-cadastro {
-    background-color: #f8f9fa; /* Fundo claro */
-    border-color: #28a745; /* Cor da borda verde */
+    background-color: #f8f9fa; 
+    border-color: #28a745; 
 }
 
 .form-cadastro h2 {
-    color: #28a745; /* Verde suave no título */
+    color: #28a745; 
 }
 
 .form-control {
-    border-color: #28a745; /* Borda verde nos campos */
-    background-color: #e9f7ef; /* Fundo leve e esverdeado nos campos */
+    border-color: #28a745; 
+    background-color: #e9f7ef; 
 }
 
 .btn-success1 {
@@ -267,10 +265,9 @@ table.table .img-thumbnail {
 }
 
 
-  /* CSS Interno */
   .thead-custom {
-    background-color: #5f925f; /* Verde claro */
-    color: white; /* Verde escuro para o texto */
+    background-color: #5f925f;
+    color: white; 
 }
 
 .thead-custom th {
@@ -278,30 +275,29 @@ table.table .img-thumbnail {
 }
 
 .text-dark {
-    color: #000; /* Preto para o título do histórico de pedidos */
+    color: #000; 
 }
 
 
 #produto-form {
-    border: 4px solid #eee4e4;  /* Borda cinza clara ao redor do formulário */
-    border-radius: 8px;         /* Bordas levemente arredondadas */
-    padding: 20px;              /* Espaçamento interno do formulário */
-    margin: 40px;               /* Espaçamento externo para evitar que o formulário fique muito próximo dos outros elementos */
+    border: 4px solid #eee4e4;  
+    border-radius: 8px;         
+    padding: 20px;              
+    margin: 40px;               
 }
 
 #produto-form h4 {
-    text-align: center;         /* Centraliza o título */
+    text-align: center;        
 }
 
 #produto-form button {
-    border-radius: 5px;        /* Bordas arredondadas nos botões */
+    border-radius: 5px;        
     width: auto;
 }
 
 
 .contact-box i {
-    color: #D14836; /* Cor vermelha do Gmail */
-    font-size: 24px; /* Ajuste o tamanho do ícone se necessário */
+    font-size: 24px; 
 }
 
 
