@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="bg-light p-4 rounded mb-5">
-                <h3 class="table-title border-bottom pb-2 mb-3">Pedidos dos Usuários</h3>
+                <h3 class="table-title border-bottom pb-2 mb-3">Pedidos Pendente</h3>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-striped table-sm">
                         <thead class="thead-dark">
@@ -61,7 +61,7 @@
                             {% for i in carrinhos_confirmados %}
                             <tr>
                                 <td>{{ i.id }}</td>
-                                <td>{{ i.usuario }}</td> >
+                                <td>{{ i.usuario }}</td>
                                 <td>R$ {{ i.get_total }}</td>
                                 <td>
                                     {% if i.confirmado %}

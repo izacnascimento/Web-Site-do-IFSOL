@@ -55,7 +55,7 @@
                                         <td>{{ produto.unidade_de_medida }}</td>
                                         <td>
                                         {% if user.is_authenticated %}
-                                        <a id="add-product" href="{% url 'logcarrinho' %}?redirect=logcarrinho" class="btn btn-success">Adicionar</a>
+                                            <a id="add-product" href="{% url 'logcarrinho' %}?redirect=logcarrinho" class="btn btn-success">Adicionar</a>
                                             {% if user.is_authenticated and user.is_superuser %}
                                                 <a href="{% url 'editar_produto' produto.id %}" class="btn btn-info">Editar</a>
                                                 <button class="btn btn-danger" onclick="showDeleteModal('{{ produto.id }}')">Excluir</button>
@@ -70,7 +70,6 @@
                     </div>
                 </div>
                 {% endif %}
-
                 <hr class="mt-3">
             </div>
         </div>
