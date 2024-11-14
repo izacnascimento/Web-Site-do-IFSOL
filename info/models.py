@@ -13,7 +13,7 @@ class Usuario(models.Model):
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=50)
     tipo_usuario = models.IntegerField(default=0)
-    is_admin = models.BooleanField(default=False)  # Novo campo para identificar administradores
+    is_admin = models.BooleanField(default=False)  
 
     def __str__(self):
         return f"{self.chave.username} - {'Admin' if self.is_admin else 'Usuário Comum'}"
