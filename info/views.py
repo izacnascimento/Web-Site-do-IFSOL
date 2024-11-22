@@ -94,27 +94,29 @@ def logperfil(request):
 
 
 @login_required
-def addcarrinho (request, id):
+def addcarrinho(request, id):
     produto = Produtos.objects.get(id=id)
-    carrinho =  request.user.carrinhos.filter(ativo = True).last()
+    carrinho = request.user.carrinhos.filter(ativo=True).last()
     if carrinho is None:
-        carrinho = Carrinho() 
+        carrinho = Carrinho()
         carrinho.usuario = request.user
         carrinho.ativo = True
         carrinho.save()
 
     p = carrinho.itens.filter(produto__id=id).first()
 
-    if p is None:    
-        ic = ItemCarrinho(carrinho = carrinho, produto = produto, quantidade = 0, subtotal = 0)
+    if p is None:
+        ic = ItemCarrinho(carrinho=carrinho, produto=produto, quantidade=0, subtotal=0)
         ic.save()
         carrinho.itens.add(ic)
         carrinho.save()
-    
-    item = carrinho.itens.filter(produto__id= id).first()
-    item.quantidade+= 1
-    item.subtotal = item.quantidade * item.produto.preco 
+
+    item = carrinho.itens.filter(produto__id=id).first()
+    item.quantidade += 1
+    item.subtotal = item.quantidade * item.produto.preco
     item.save()
+
+    return redirect('logcarrinho') 
 
 def atualizar_quantidade(request, item_id):
     if request.method == 'GET':
