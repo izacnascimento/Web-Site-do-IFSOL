@@ -10,15 +10,11 @@ from django.http import JsonResponse
 
 @login_required
 def superuser(request):
-    # Verifica se o usuário logado é superusuário
     if not request.user.is_superuser:
-        return redirect('index')  # Redireciona para a página inicial se não for superusuário
+        return redirect('index')  
     
-    # Consulta os carrinhos confirmados e não confirmados
     carrinhos_confirmados = Carrinho.objects.filter(confirmado=True)
     lista = Carrinho.objects.filter(ativo=False, confirmado=False)
-    
-    # Renderiza a página da cooperativa se o usuário for superusuário
     return render(request, 'usuarios/superuser.html', {'lista': lista, 'carrinhos_confirmados': carrinhos_confirmados})
 
 
@@ -57,7 +53,6 @@ def logcarrinho (request):
 @login_required
 def logperfil(request):
     if request.user.is_authenticated:
-        # Tente buscar o usuário com o "get_object_or_404"
         try:
             pessoa = Usuario.objects.get(chave=request.user)
 
@@ -78,19 +73,17 @@ def logperfil(request):
                 pessoa.cidade = cidade
                 pessoa.estado = estado
                 
-                pessoa.save()  # Salvar as alterações feitas
+                pessoa.save() 
                 return redirect('index')
 
             else:
                 return render(request, 'usuarios/logperfil.html', {'pessoa': pessoa})
 
         except Usuario.DoesNotExist:
-            # Aqui você pode redirecionar para uma página de erro ou criar o usuário
-            # Caso deseje redirecionar para uma página de registro, você pode fazer assim:
-            return redirect('login')  # Substitua pelo nome da view de registro
+            return redirect('login')  
     
     else:
-        return redirect('index')  # Redirecionar não autenticados para a página inicial
+        return redirect('index')  
 
 
 @login_required
@@ -126,7 +119,7 @@ def atualizar_quantidade(request, item_id):
         if nova_quantidade_str is not None:
             try:
                 nova_quantidade = int(nova_quantidade_str)
-                if nova_quantidade >= 0:  # Verifica se a quantidade é um número positivo
+                if nova_quantidade >= 0: 
                     item.quantidade = nova_quantidade
                     item.subtotal = nova_quantidade * item.produto.preco
                     item.save()
@@ -147,7 +140,7 @@ def apagar_item_carrinho(request, item_id):
         item = ItemCarrinho.objects.filter(pk=item_id).first()
         if item:
             item.delete()
-            return JsonResponse({'success': True})  # Retorna um JSON de sucesso
+            return JsonResponse({'success': True})  
         return JsonResponse({'success': False, 'error': 'Item não encontrado.'}, status=404)
 
     return JsonResponse({'success': False, 'error': 'Método não permitido.'}, status=405)
@@ -156,30 +149,21 @@ def exclui_produto(request, item_id):
     if request.method == 'GET':
         produto = get_object_or_404(Produtos, pk=item_id)
         produto.delete()
-        # return redirect('pgcadastrar')  # Redireciona para a página correta após a exclusão
     return redirect('pgcadastrar') 
 
 def atualizar_subtotal(request, item_id):
-    # Obtém o item do carrinho usando o item_id
     item = ItemCarrinho.objects.get(pk=item_id)
-
-    # Recupera a quantidade da requisição (supondo que ela seja enviada via GET ou POST)
     quantidade_str = request.GET.get('quantidade') or request.POST.get('quantidade')
 
-    # Verifica se a quantidade foi fornecida
     if quantidade_str:
         try:
-            # Converte a quantidade para inteiro
             quantidade = int(quantidade_str)
 
-            # Verifica se a quantidade é positiva
             if quantidade >= 0:
-                # Atualiza a quantidade e o subtotal do item
                 item.quantidade = quantidade
                 item.subtotal = item.produto.preco * quantidade
-                item.save()  # Salva as alterações no banco de dados
+                item.save() 
                 
-                # Retorna o subtotal diretamente
                 subtotal = item.subtotal
                 return subtotal
             else:

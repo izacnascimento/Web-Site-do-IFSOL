@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="bg-light p-4 rounded mb-5">
-                <h3 class="table-title border-bottom pb-2 mb-3">Pedidos dos Usuários</h3>
+                <h3 class="table-title border-bottom pb-2 mb-3">Pedidos Pendente</h3>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-striped table-sm">
                         <thead class="thead-dark">
@@ -51,15 +51,17 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>ID do Pedido</th>
+                                <th>Usuário</th>
                                 <th>Total</th>
                                 <th>Confirmado</th>
-                                <th>Ações</th>
+                                <th>Ações</th> 
                             </tr>
                         </thead>
                         <tbody>
                             {% for i in carrinhos_confirmados %}
                             <tr>
                                 <td>{{ i.id }}</td>
+                                <td>{{ i.usuario }}</td>
                                 <td>R$ {{ i.get_total }}</td>
                                 <td>
                                     {% if i.confirmado %}
@@ -69,7 +71,8 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm" data-pedido-id="{{ i.id }}" onclick="showDeleteModal(this)">Excluir</button>
+                                    <a class="btn btn-warning btn-sm" href="{% url 'detalhar_pedido' i.id %}">Detalher</a> 
+                                    <button class="btn btn-danger btn-sm" data-pedido-id="{{ i.id }}" onclick="showDeleteModal(this)">Excluir</button> 
                                 </td>
                             </tr>
                             {% endfor %}
