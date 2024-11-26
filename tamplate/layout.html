@@ -75,17 +75,17 @@
                     {% if user.is_authenticated %}
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logcarrinho' %}"><i class="fa-solid fa-cart-shopping"></i> <span class="sr-only">(página atual)</span></a>
+                                <a class="nav-link" href="{% url 'logcarrinho' %}"> Carrinho <span class="sr-only">(página atual)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logperfil' %}"><i class="fa-solid fa-circle-user"></i> <span class="sr-only">(página atual)</span></a>
+                                <a class="nav-link" href="{% url 'logperfil' %}"> Perfil <span class="sr-only">(página atual)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'AlterarSenha' %}"><i class="fa-solid fa-lock"></i><span class="sr-only">(página atual)</span></a>
+                                <a class="nav-link" href="{% url 'AlterarSenha' %}"> Alterar Senha <span class="sr-only">(página atual)</span></a>
                             </li>
                            
                             <li>
-                            <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                            <a class="nav-link" href="{% url 'logout' %}"> Sair </a>
                             </li>
                         </ul>
                     {% else %}

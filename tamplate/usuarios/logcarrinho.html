@@ -81,6 +81,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>ID do Pedido</th>
+                            <th>Usuário</th>
                             <th>Total</th>
                             <th>Confirmado</th>
                         </tr>
@@ -89,8 +90,13 @@
                         {% for i in hist %}
                             <tr>
                                 <td>{{i.id}}</td>
+                                <td>{{ i.usuario }}</td>
                                 <td>R$ {{i.get_total}}</td>
-                                <td>{{i.confirmado}}</td>
+                                <td> {% if i.confirmado %}
+                                    <span class="">Validado</span>
+                                {% else %}
+                                    <span class="">Não Validado</span>
+                                {% endif %}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
